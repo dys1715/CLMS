@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="业务处理">
+        <menu>
+            <item
+                android:id="@+id/nav_repertory_manage"
+                android:icon="@drawable/ic_menu_send"
+                android:title="库存管理" />
+            <item
+                android:id="@+id/nav_rent_computer"
+                android:icon="@drawable/ic_menu_send"
+                android:title="出租电脑" />
+        </menu>
+    </item>
+    <item android:title="查询统计">
+        <menu>
+            <item
+                android:id="@+id/nav_pact_search"
+                android:icon="@drawable/ic_menu_send"
+                android:title="合同查询" />
+            <item
+                android:id="@+id/nav_income_expand_info"
+                android:icon="@drawable/ic_menu_send"
+                android:title="收入支出统计" />
+            <item
+                android:id="@+id/nav_deposit_info"
+                android:icon="@drawable/ic_menu_send"
+                android:title="押金统计" />
+        </menu>
+    </item>
+    <group android:checkableBehavior="single">
+        <!--<item-->
+            <!--android:id="@+id/nav_camera"-->
+            <!--android:icon="@drawable/ic_menu_camera"-->
+            <!--android:title="Import" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_gallery"-->
+            <!--android:icon="@drawable/ic_menu_gallery"-->
+            <!--android:title="Gallery" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_slideshow"-->
+            <!--android:icon="@drawable/ic_menu_slideshow"-->
+            <!--android:title="Slideshow" />-->
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="设置" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_menu_send"
+            android:title="关于" />
+    </group>
+
+
+</menu>

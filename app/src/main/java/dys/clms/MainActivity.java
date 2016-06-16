@@ -1,5 +1,6 @@
 package dys.clms;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("到期合同");
         setSupportActionBar(toolbar);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -67,8 +69,8 @@ public class MainActivity extends AppCompatActivity
         remindList.setLayoutManager(new LinearLayoutManager(this));
         remindList.setAdapter(new MyAdapter());
 
-        count = (TextView)findViewById(R.id.tv_count);
-        count.setText("到期合同总数："+remindList.getAdapter().getItemCount());
+        count = (TextView) findViewById(R.id.tv_count);
+        count.setText("到期合同总数：" + remindList.getAdapter().getItemCount());
     }
 
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -111,7 +113,7 @@ public class MainActivity extends AppCompatActivity
         public void setFilter(String queryText) {
             searchList = new ArrayList<>();
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).toLowerCase().contains(queryText)){
+                if (list.get(i).toLowerCase().contains(queryText)) {
                     searchList.add(list.get(i));
                 }
             }
@@ -177,6 +179,7 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             //库存管理
             case R.id.nav_repertory_manage:
+                startActivity(new Intent(this, RepertoryActivity.class));
                 break;
             //出租电脑
             case R.id.nav_rent_computer:
@@ -200,7 +203,7 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
-        drawer.closeDrawer(GravityCompat.START);
+//        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }

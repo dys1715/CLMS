@@ -1,9 +1,12 @@
 package dys.clms;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,13 +34,24 @@ public class RepertoryActivity extends BaseActivity {
 
     //    private TextView title, back;
     private ListView repertoryList;
+    private List<String> mList;
+    private MyAdapter adapter;
+    private Spinner classifySearch;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repertory);
+        //分类检索框
+        classifySearch = (Spinner) findViewById(R.id.sp_classify_search);
+        //初始化假数据
+        mList = new ArrayList<>();
+        for (int i = 0; i < 18; i++) {
+            mList.add(i + "");
+        }
         repertoryList = (ListView) findViewById(R.id.lv_repertory_list);
-        repertoryList.setAdapter(new MyAdapter());
+        adapter = new MyAdapter(mList);
+        repertoryList.setAdapter(adapter);
         repertoryList.setTextFilterEnabled(true);
         repertoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -45,19 +60,30 @@ public class RepertoryActivity extends BaseActivity {
                         .putExtra("dataType", ConstantValue.VIEW_DATA));
             }
         });
+        repertoryList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                new AlertDialog.Builder(mContext).setItems(new String[]{"修改", "删除"},
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (which == 0){
+                                    startActivity(new Intent(mContext,RepertoryDetailsActivity.class)
+                                            .putExtra("dataType",ConstantValue.CHANGE_DATA));
+                                }else {
+                                    mList.remove(position);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }
+                        }).show();
+                return true;
+            }
+        });
     }
 
     @Override
     protected void initTitle() {
-        mToolbar.setTitle("库存管理");
-        setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(android.R.drawable.ic_menu_revert);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        setTitle("库存管理");
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -106,11 +132,8 @@ public class RepertoryActivity extends BaseActivity {
         private List<String> searchList;
         private List<String> oldList;
 
-        public MyAdapter() {
-            mList = new ArrayList<>();
-            for (int i = 0; i < 18; i++) {
-                mList.add(i + "");
-            }
+        public MyAdapter(List<String> mList) {
+            this.mList = mList;
             oldList = mList;
         }
 
@@ -135,12 +158,12 @@ public class RepertoryActivity extends BaseActivity {
             if (convertView == null) {
                 convertView = LayoutInflater.from(RepertoryActivity.this).inflate(R.layout.item_main_list, null);
                 holder = new ViewHolder();
-                holder.mTextView = (TextView) convertView.findViewById(R.id.text);
+                holder.classify = (TextView) convertView.findViewById(R.id.tv_classify);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.mTextView.setText(mList.get(position));
+            holder.classify.setText(mList.get(position));
             return convertView;
         }
 
@@ -164,7 +187,7 @@ public class RepertoryActivity extends BaseActivity {
         }
 
         class ViewHolder {
-            TextView mTextView;
+            TextView classify,state,rent,deposit,cpu,gpu,mainboard;
         }
     }
 }

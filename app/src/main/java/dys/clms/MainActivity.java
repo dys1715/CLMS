@@ -95,7 +95,10 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-            holder.textView.setText(list.get(position) + ".");
+            holder.name.setText("姓名：" + list.get(position));
+            holder.tel.setText("电话：" + list.get(position));
+            holder.rentTime.setText("出租时间：" + list.get(position) + "");
+            holder.overTime.setText("截止时间：" + list.get(position) + "");
         }
 
         @Override
@@ -123,11 +126,14 @@ public class MainActivity extends AppCompatActivity
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-            TextView textView;
+            TextView name, tel, rentTime, overTime;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
-                textView = (TextView) itemView.findViewById(R.id.text);
+                name = (TextView) itemView.findViewById(R.id.tv_name);
+                tel = (TextView) itemView.findViewById(R.id.tv_tel);
+                rentTime = (TextView) itemView.findViewById(R.id.tv_rent_time);
+                overTime = (TextView) itemView.findViewById(R.id.tv_over_time);
             }
         }
     }

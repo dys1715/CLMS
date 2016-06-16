@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,12 +27,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="编号："/>
+                    android:text="编号：" />
 
                 <EditText
                     android:id="@+id/et_id"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
@@ -43,13 +45,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="状态："/>
+                    android:text="状态：" />
 
                 <Spinner
                     android:id="@+id/sp_state"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </Spinner>
+                    android:layout_height="match_parent"></Spinner>
             </LinearLayout>
         </LinearLayout>
 
@@ -70,12 +71,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="CPU："/>
+                    android:text="CPU：" />
 
                 <Spinner
                     android:id="@+id/sp_cpu"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <LinearLayout
@@ -88,13 +89,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="主板："/>
+                    android:text="主板：" />
 
                 <Spinner
                     android:id="@+id/sp_mainboard"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </Spinner>
+                    android:layout_height="match_parent"></Spinner>
             </LinearLayout>
         </LinearLayout>
 
@@ -115,12 +115,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="内存："/>
+                    android:text="内存：" />
 
                 <Spinner
                     android:id="@+id/sp_memory"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <LinearLayout
@@ -133,13 +133,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="硬盘："/>
+                    android:text="硬盘：" />
 
                 <Spinner
                     android:id="@+id/sp_hard_disk"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </Spinner>
+                    android:layout_height="match_parent"></Spinner>
             </LinearLayout>
         </LinearLayout>
 
@@ -160,12 +159,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="显卡："/>
+                    android:text="显卡：" />
 
                 <Spinner
                     android:id="@+id/sp_gpu"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <LinearLayout
@@ -178,13 +177,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="显示器："/>
+                    android:text="显示器：" />
 
                 <Spinner
                     android:id="@+id/sp_screen"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </Spinner>
+                    android:layout_height="match_parent"></Spinner>
             </LinearLayout>
         </LinearLayout>
 
@@ -205,12 +203,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="光驱："/>
+                    android:text="光驱：" />
 
                 <Spinner
                     android:id="@+id/sp_cd_driver"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <LinearLayout
@@ -223,13 +221,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="软驱："/>
+                    android:text="软驱：" />
 
                 <Spinner
                     android:id="@+id/sp_floppy_drive"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </Spinner>
+                    android:layout_height="match_parent"></Spinner>
             </LinearLayout>
         </LinearLayout>
 
@@ -250,12 +247,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="声卡："/>
+                    android:text="声卡：" />
 
                 <Spinner
                     android:id="@+id/sp_sound_card"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <LinearLayout
@@ -268,13 +265,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="键盘："/>
+                    android:text="键盘：" />
 
                 <Spinner
                     android:id="@+id/sp_keyboard"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </Spinner>
+                    android:layout_height="match_parent"></Spinner>
             </LinearLayout>
         </LinearLayout>
 
@@ -295,12 +291,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="鼠标："/>
+                    android:text="鼠标：" />
 
                 <Spinner
                     android:id="@+id/sp_mouse"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <LinearLayout
@@ -313,13 +309,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="机箱："/>
+                    android:text="机箱：" />
 
                 <Spinner
                     android:id="@+id/sp_box"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </Spinner>
+                    android:layout_height="match_parent"></Spinner>
             </LinearLayout>
         </LinearLayout>
 
@@ -340,12 +335,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="音箱："/>
+                    android:text="音箱：" />
 
                 <Spinner
                     android:id="@+id/sp_voice_box"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <LinearLayout
@@ -358,13 +353,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="网卡："/>
+                    android:text="网卡：" />
 
                 <Spinner
                     android:id="@+id/sp_network_card"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </Spinner>
+                    android:layout_height="match_parent"></Spinner>
             </LinearLayout>
         </LinearLayout>
 
@@ -385,12 +379,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="月租金："/>
+                    android:text="月租金：" />
 
                 <EditText
                     android:id="@+id/et_rent"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
@@ -403,12 +397,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="押金："/>
+                    android:text="押金：" />
 
                 <EditText
                     android:id="@+id/et_deposit"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
 
@@ -428,12 +422,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="库存分类："/>
+                    android:text="库存分类：" />
 
                 <Spinner
                     android:id="@+id/sp_classify"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
 
@@ -447,12 +441,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="备注："/>
+                    android:text="备注：" />
 
                 <EditText
                     android:id="@+id/et_remark"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
 
@@ -461,6 +455,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="保 存"/>
+            android:text="保 存" />
     </LinearLayout>
 </ScrollView>

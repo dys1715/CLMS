@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="1dp"
+    android:layout_margin="4dp"
     android:background="@drawable/item_corner"
     android:orientation="vertical">
 
@@ -12,22 +12,22 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tv_classify"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="姓名：dahui" />
+            android:text="分类：笔记本" />
 
         <TextView
-            android:id="@+id/tv_rent_time"
+            android:id="@+id/tv_classify_state"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="出租日期：2016-01-18" />
+            android:text="库存状态：空闲" />
     </LinearLayout>
 
     <LinearLayout
@@ -37,22 +37,56 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_tel"
+            android:id="@+id/tv_rent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="电话：15015558888" />
+            android:text="月租金：150" />
 
         <TextView
-            android:id="@+id/tv_over_time"
+            android:id="@+id/tv_deposit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="截止日期：2016-01-30" />
+            android:text="押金：300" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_cpu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="cpu：x631" />
+
+        <TextView
+            android:id="@+id/tv_mainboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="主板：msi" />
+
+        <TextView
+            android:id="@+id/tv_gpu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="显卡：GTX750" />
     </LinearLayout>
 
 </LinearLayout>

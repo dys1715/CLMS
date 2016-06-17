@@ -4,19 +4,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 /**
- * Created by Administrator on 2016/6/16 0016.
- * 出租电脑
+ * Created by dys on 2016/6/17 0017.
+ * 合同详情
  */
-public class RentActivity extends BaseActivity {
+public class PactDetailsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rent);
+        setContentView(R.layout.activity_pact_details);
     }
 
     @Override
     protected void initTitle() {
-        setTitle("出租电脑");
+        setTitle("合同详情");
     }
 }

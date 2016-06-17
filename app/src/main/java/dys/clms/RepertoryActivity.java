@@ -1,6 +1,5 @@
 package dys.clms;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +18,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +34,11 @@ public class RepertoryActivity extends BaseActivity {
     private ListView repertoryList;
     private List<String> mList;
     private MyAdapter adapter;
-    private Spinner classifySearch;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repertory);
-        //分类检索框
-        classifySearch = (Spinner) findViewById(R.id.sp_classify_search);
         //初始化假数据
         mList = new ArrayList<>();
         for (int i = 0; i < 18; i++) {
@@ -156,14 +151,20 @@ public class RepertoryActivity extends BaseActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
             if (convertView == null) {
-                convertView = LayoutInflater.from(RepertoryActivity.this).inflate(R.layout.item_main_list, null);
+                convertView = LayoutInflater.from(RepertoryActivity.this).inflate(R.layout.item_repe_list, null);
                 holder = new ViewHolder();
                 holder.classify = (TextView) convertView.findViewById(R.id.tv_classify);
+                holder.state = (TextView) convertView.findViewById(R.id.tv_classify_state);
+                holder.rent = (TextView) convertView.findViewById(R.id.tv_rent);
+                holder.deposit = (TextView) convertView.findViewById(R.id.tv_deposit);
+                holder.cpu = (TextView) convertView.findViewById(R.id.tv_cpu);
+                holder.gpu = (TextView) convertView.findViewById(R.id.tv_gpu);
+                holder.mainboard = (TextView) convertView.findViewById(R.id.tv_mainboard);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.classify.setText(mList.get(position));
+            holder.classify.setText("分类" + mList.get(position));
             return convertView;
         }
 

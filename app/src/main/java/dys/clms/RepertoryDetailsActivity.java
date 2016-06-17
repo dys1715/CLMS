@@ -68,6 +68,11 @@ public class RepertoryDetailsActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void initTitle() {
+        setTitle("货单详情");
+    }
+
     private void setAllViewUnClick() {
         mEtId.setEnabled(false);
         mEtRent.setEnabled(false);
@@ -93,10 +98,5 @@ public class RepertoryDetailsActivity extends BaseActivity {
         mSpVoiceBox.setClickable(false);
         mSpNetworkCard.setClickable(false);
         mSpClassify.setClickable(false);
-    }
-
-    @Override
-    protected void initTitle() {
-        setTitle("订单详情");
     }
 }

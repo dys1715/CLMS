@@ -13,11 +13,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -99,6 +101,12 @@ public class MainActivity extends AppCompatActivity
             holder.tel.setText("电话：" + list.get(position));
             holder.rentTime.setText("出租时间：" + list.get(position) + "");
             holder.overTime.setText("截止时间：" + list.get(position) + "");
+            holder.root.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this,PactDetailsActivity.class));
+                }
+            });
         }
 
         @Override
@@ -126,10 +134,12 @@ public class MainActivity extends AppCompatActivity
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
+            LinearLayout root;
             TextView name, tel, rentTime, overTime;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
+                root = (LinearLayout)itemView.findViewById(R.id.ll_root);
                 name = (TextView) itemView.findViewById(R.id.tv_name);
                 tel = (TextView) itemView.findViewById(R.id.tv_tel);
                 rentTime = (TextView) itemView.findViewById(R.id.tv_rent_time);
@@ -147,12 +157,15 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    SearchView searchView;
+    MenuItem menuItemSearch;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        MenuItem menuItem = menu.findItem(R.id.ab_search);//在菜单中找到对应控件的item
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        menuItemSearch = menu.findItem(R.id.ab_search);//在菜单中找到对应控件的item
+        searchView = (SearchView) MenuItemCompat.getActionView(menuItemSearch);
         assert searchView != null;
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -189,6 +202,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             //出租电脑
             case R.id.nav_rent_computer:
+                startActivity(new Intent(this, RentActivity.class));
                 break;
             //合同查询
             case R.id.nav_pact_search:

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="1dp"
-    android:background="@drawable/item_corner"
-    android:orientation="vertical">
+              android:id="@+id/ll_root"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="1dp"
+              android:background="@drawable/item_corner"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="姓名：dahui" />
+            android:text="姓名：dahui"/>
 
         <TextView
             android:id="@+id/tv_rent_time"
@@ -27,7 +28,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="出租日期：2016-01-18" />
+            android:text="出租日期：2016-01-18"/>
     </LinearLayout>
 
     <LinearLayout
@@ -43,7 +44,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="电话：15015558888" />
+            android:text="电话：15015558888"/>
 
         <TextView
             android:id="@+id/tv_over_time"
@@ -52,7 +53,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="截止日期：2016-01-30" />
+            android:text="截止日期：2016-01-30"/>
     </LinearLayout>
 
 </LinearLayout>

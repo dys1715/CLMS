@@ -7,9 +7,18 @@
               android:background="@drawable/item_corner"
               android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/tv_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="合同编号：01"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -19,7 +28,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="姓名：dahui"/>
+            android:text="乙方姓名：dahui"/>
 
         <TextView
             android:id="@+id/tv_rent_time"

@@ -22,6 +22,7 @@
         <activity android:name=".RepertoryDetailsActivity"/>
         <activity android:name=".PactDetailsActivity"/>
         <activity android:name=".RentActivity"/>
+        <activity android:name=".PactSearchActivity"/>
     </application>
 
 </manifest>

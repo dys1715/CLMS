@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
+            holder.id.setText("合同编号：" + list.get(position));
             holder.name.setText("姓名：" + list.get(position));
             holder.tel.setText("电话：" + list.get(position));
             holder.rentTime.setText("出租时间：" + list.get(position) + "");
@@ -135,11 +136,12 @@ public class MainActivity extends AppCompatActivity
 
         class MyViewHolder extends RecyclerView.ViewHolder {
             LinearLayout root;
-            TextView name, tel, rentTime, overTime;
+            TextView id,name, tel, rentTime, overTime;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
                 root = (LinearLayout)itemView.findViewById(R.id.ll_root);
+                id = (TextView)itemView.findViewById(R.id.tv_id);
                 name = (TextView) itemView.findViewById(R.id.tv_name);
                 tel = (TextView) itemView.findViewById(R.id.tv_tel);
                 rentTime = (TextView) itemView.findViewById(R.id.tv_rent_time);
@@ -206,13 +208,14 @@ public class MainActivity extends AppCompatActivity
                 break;
             //合同查询
             case R.id.nav_pact_search:
+                startActivity(new Intent(this, PactSearchActivity.class));
                 break;
-            //收支统计
-            case R.id.nav_income_expand_info:
-                break;
-            //押金统计
-            case R.id.nav_deposit_info:
-                break;
+//            //收支统计
+//            case R.id.nav_income_expand_info:
+//                break;
+//            //押金统计
+//            case R.id.nav_deposit_info:
+//                break;
             //设置
             case R.id.nav_setting:
                 break;

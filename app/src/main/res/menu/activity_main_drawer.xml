@@ -19,14 +19,15 @@
                 android:id="@+id/nav_pact_search"
                 android:icon="@drawable/ic_menu_send"
                 android:title="合同查询"/>
-            <item
-                android:id="@+id/nav_income_expand_info"
-                android:icon="@drawable/ic_menu_send"
-                android:title="收入支出统计"/>
-            <item
-                android:id="@+id/nav_deposit_info"
-                android:icon="@drawable/ic_menu_send"
-                android:title="押金统计"/>
+            <!--暂不开发-->
+            <!--<item-->
+                <!--android:id="@+id/nav_income_expand_info"-->
+                <!--android:icon="@drawable/ic_menu_send"-->
+                <!--android:title="收入支出统计"/>-->
+            <!--<item-->
+                <!--android:id="@+id/nav_deposit_info"-->
+                <!--android:icon="@drawable/ic_menu_send"-->
+                <!--android:title="押金统计"/>-->
         </menu>
     </item>
     <!--<group android:checkableBehavior="single">-->

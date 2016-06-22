@@ -1,10 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp">
+
     <TextView
+        android:id="@+id/tv_pact_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="pact details"/>
+        android:textSize="18dp"
+        android:text="合同编号：01" />
+
+    <TextView
+        android:id="@+id/tv_pact_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="合同状态：已终止" />
+
+    <TextView
+        android:id="@+id/tv_pact_customer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="乙方：111111" />
+
+    <TextView
+        android:id="@+id/tv_pact_customer_tel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="乙方电话：13800000000" />
+
+    <TextView
+        android:id="@+id/tv_pact_customer_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="乙方地址：东方" />
+
+    <TextView
+        android:id="@+id/tv_pact_customer_classify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="客户类别：单位用户" />
+
+    <TextView
+        android:id="@+id/tv_pact_id_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="身份证：360199555555555" />
+
+    <TextView
+        android:id="@+id/tv_pact_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="签订地点：新大地" />
+
+    <TextView
+        android:id="@+id/tv_pact_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="签订时间：20160101" />
+
+    <TextView
+        android:id="@+id/tv_repe_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="库存编号：02" />
+
+    <TextView
+        android:id="@+id/tv_rent_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="出租日期：2008-01-02" />
+
+    <TextView
+        android:id="@+id/tv_rent_over"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="截止日期：2008-02-02" />
+
+    <TextView
+        android:id="@+id/tv_rent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="租金：100" />
+
+    <TextView
+        android:id="@+id/tv_deposit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="押金：500" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_pact_preview"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="预览" />
+        <Button
+            android:id="@+id/btn_pact_relet"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="续租" />
+        <Button
+            android:id="@+id/btn_pact_over"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="终止" />
+        <Button
+            android:id="@+id/btn_pact_print"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="打印" />
+    </LinearLayout>
 </LinearLayout>

@@ -218,6 +218,7 @@ public class MainActivity extends AppCompatActivity
 //                break;
             //设置
             case R.id.nav_setting:
+                startActivity(new Intent(this, SettingActivity.class));
                 break;
             //关于
             case R.id.nav_about:

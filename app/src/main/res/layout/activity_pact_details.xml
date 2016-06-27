@@ -110,6 +110,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:visibility="gone"
             android:id="@+id/btn_pact_preview"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -128,6 +129,7 @@
             android:layout_height="wrap_content"
             android:text="终止" />
         <Button
+            android:visibility="gone"
             android:id="@+id/btn_pact_print"
             android:layout_width="0dp"
             android:layout_weight="1"

@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        assert toolbar != null;
         toolbar.setTitle("到期合同");
         setSupportActionBar(toolbar);
 

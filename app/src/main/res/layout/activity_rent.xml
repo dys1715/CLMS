@@ -20,6 +20,7 @@
             android:id="@+id/et_repertory_id"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:layout_weight="1"/>
 
         <Button

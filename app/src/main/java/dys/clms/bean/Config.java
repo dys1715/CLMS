@@ -1,15 +1,15 @@
 package dys.clms.bean;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2016/6/26 0026.
  */
 public class Config {
     private String configTitle;
-    private List<String> config;
+    private ArrayList<String> config;
 
-    public Config(String configTitle, List<String> config) {
+    public Config(String configTitle, ArrayList<String> config) {
         this.configTitle = configTitle;
         this.config = config;
     }
@@ -22,11 +22,11 @@ public class Config {
         this.configTitle = configTitle;
     }
 
-    public List<String> getConfig() {
+    public ArrayList<String> getConfig() {
         return config;
     }
 
-    public void setConfig(List<String> config) {
+    public void setConfig(ArrayList<String> config) {
         this.config = config;
     }
 }

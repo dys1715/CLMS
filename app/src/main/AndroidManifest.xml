@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dys.clms">
-<!--电脑租赁管理系统(computer lease management system)-->
+          package="dys.clms">
+    <!--电脑租赁管理系统(computer lease management system)-->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,9 +13,9 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".RepertoryActivity"/>
@@ -26,6 +26,9 @@
         <activity android:name=".PactPreviewActivity"/>
         <activity android:name=".SettingActivity"/>
         <activity android:name=".ConfigurationsActivity"/>
+        <activity android:name=".ConfigDetailsActivity"/>
+        <activity android:name=".SettingRepeClassifyActivity"/>
+        <activity android:name=".SettingCustomerClassify"/>
     </application>
 
 </manifest>

@@ -1,9 +1,11 @@
 package dys.clms;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +22,14 @@ import dys.clms.view.NoScrollGridView;
 
 /**
  * Created by Administrator on 2016/6/26 0026.
+ * 常用配置维护
  */
 public class ConfigurationsActivity extends BaseActivity {
 
     private RecyclerView configList;
     private MyAdapter adapter;
-    private List<Config> configs;
-    private List<String> configsItem;
+    private ArrayList<Config> configs;
+    private ArrayList<String> configsItem;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +47,7 @@ public class ConfigurationsActivity extends BaseActivity {
 
         configList = (RecyclerView) findViewById(R.id.rv_config);
         configList.setLayoutManager(new LinearLayoutManager(mContext));
-        adapter = new MyAdapter(configs);
+        adapter = new MyAdapter();
         configList.setAdapter(adapter);
     }
 
@@ -53,16 +56,22 @@ public class ConfigurationsActivity extends BaseActivity {
         setTitle("常用配置维护");
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            Log.e("aaaaaaaaaaaaa","------------------------------");
+            ArrayList<String> gridList = data.getStringArrayListExtra("listData");
+            int position = data.getIntExtra("position", -1);
+            configs.remove(position);
+            configs.add(position, new Config(position + "", gridList));
+            adapter.notifyDataSetChanged();
+        }
+    }
+
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-        private List<Config> mList;
-        private List<String> gridList;
+//        private ArrayList<String> gridList;
         private GridAdapter adapter;
-
-        public MyAdapter(List<Config> mList) {
-            this.mList = mList;
-            gridList = new ArrayList<>();
-        }
 
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -72,22 +81,24 @@ public class ConfigurationsActivity extends BaseActivity {
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
-            holder.title.setText(mList.get(position).getConfigTitle());
-            gridList = mList.get(position).getConfig();
-            adapter = new GridAdapter(gridList);
+        public void onBindViewHolder(MyViewHolder holder, final int position) {
+            holder.title.setText(configs.get(position).getConfigTitle());
+//            gridList = configs.get(position).getConfig();
+            adapter = new GridAdapter(configs.get(position).getConfig());
             holder.gridView.setAdapter(adapter);
             holder.edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    startActivityForResult(new Intent(mContext, ConfigDetailsActivity.class)
+                            .putExtra("position", position)
+                            .putStringArrayListExtra("gridList", configs.get(position).getConfig()), 1000);
                 }
             });
         }
 
         @Override
         public int getItemCount() {
-            return mList.size();
+            return configs.size();
         }
 
         class GridAdapter extends BaseAdapter {

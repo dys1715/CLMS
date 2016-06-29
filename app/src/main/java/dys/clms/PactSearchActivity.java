@@ -97,13 +97,14 @@ public class PactSearchActivity extends BaseActivity {
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             MyViewHolder viewHolder = new MyViewHolder(LayoutInflater.
-                    from(parent.getContext()).inflate(R.layout.item_main_list, parent, false));
+                    from(parent.getContext()).inflate(R.layout.item_pact_list, parent, false));
             return viewHolder;
         }
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, final int position) {
             holder.id.setText("合同编号：" + list.get(position));
+            holder.state.setText("合同状态：" + list.get(position));
             holder.name.setText("姓名：" + list.get(position));
             holder.tel.setText("电话：" + list.get(position));
             holder.rentTime.setText("出租时间：" + list.get(position) + "");
@@ -163,12 +164,13 @@ public class PactSearchActivity extends BaseActivity {
 
         class MyViewHolder extends RecyclerView.ViewHolder {
             LinearLayout root;
-            TextView id, name, tel, rentTime, overTime;
+            TextView id, state, name, tel, rentTime, overTime;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
                 root = (LinearLayout) itemView.findViewById(R.id.ll_root);
                 id = (TextView) itemView.findViewById(R.id.tv_id);
+                state = (TextView)itemView.findViewById(R.id.tv_state);
                 name = (TextView) itemView.findViewById(R.id.tv_name);
                 tel = (TextView) itemView.findViewById(R.id.tv_tel);
                 rentTime = (TextView) itemView.findViewById(R.id.tv_rent_time);

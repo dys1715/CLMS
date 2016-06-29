@@ -28,27 +28,40 @@ public class ConfigurationsActivity extends BaseActivity {
 
     private RecyclerView configList;
     private MyAdapter adapter;
-    private ArrayList<Config> configs;
+    private ArrayList<Config> configs = new ArrayList<>();
     private ArrayList<String> configsItem;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configurations_activity);
-        configs = new ArrayList<>();
-        //插入假数据
-        for (int i = 0; i < 10; i++) {
-            configsItem = new ArrayList<>();
-            for (int j = 0; j < 5; j++) {
-                configsItem.add(j + "");
-            }
-            configs.add(new Config(i + "", configsItem));
-        }
-
+        initData();
         configList = (RecyclerView) findViewById(R.id.rv_config);
         configList.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new MyAdapter();
         configList.setAdapter(adapter);
+    }
+
+    private void initData() {
+        //插入假数据
+        configsItem = new ArrayList<>();
+        for (int j = 0; j < 5; j++) {
+            configsItem.add(j + "");
+        }
+        configs.add(new Config("CPU", configsItem));
+        configs.add(new Config("内存", configsItem));
+        configs.add(new Config("硬盘", configsItem));
+        configs.add(new Config("主板", configsItem));
+        configs.add(new Config("显卡", configsItem));
+        configs.add(new Config("显示器", configsItem));
+        configs.add(new Config("机箱", configsItem));
+        configs.add(new Config("键盘", configsItem));
+        configs.add(new Config("鼠标", configsItem));
+        configs.add(new Config("光驱", configsItem));
+        configs.add(new Config("软驱", configsItem));
+        configs.add(new Config("声卡", configsItem));
+        configs.add(new Config("网卡", configsItem));
+
     }
 
     @Override
@@ -59,7 +72,7 @@ public class ConfigurationsActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            Log.e("aaaaaaaaaaaaa","------------------------------");
+            Log.e("aaaaaaaaaaaaa", "------------------------------");
             ArrayList<String> gridList = data.getStringArrayListExtra("listData");
             int position = data.getIntExtra("position", -1);
             configs.remove(position);
@@ -70,7 +83,7 @@ public class ConfigurationsActivity extends BaseActivity {
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-//        private ArrayList<String> gridList;
+        //        private ArrayList<String> gridList;
         private GridAdapter adapter;
 
         @Override

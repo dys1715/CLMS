@@ -83,6 +83,7 @@ public class RepertoryActivity extends BaseActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
+                    //添加库存
                     case R.id.action_add:
 //                        Toast.makeText(RepertoryActivity.this, "add", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(mContext, RepertoryDetailsActivity.class)

@@ -2,159 +2,136 @@ package dys.clms.bean.db;
 
 import org.litepal.crud.DataSupport;
 
-import dys.clms.bean.db.config.Box;
-import dys.clms.bean.db.config.CDDriver;
-import dys.clms.bean.db.config.CPU;
-import dys.clms.bean.db.config.GPU;
-import dys.clms.bean.db.config.HardDisk;
-import dys.clms.bean.db.config.Keyboard;
-import dys.clms.bean.db.config.Mainboard;
-import dys.clms.bean.db.config.Memory;
-import dys.clms.bean.db.config.Mouse;
-import dys.clms.bean.db.config.NetworkCard;
-import dys.clms.bean.db.config.Screen;
-import dys.clms.bean.db.config.SoftDriver;
-import dys.clms.bean.db.config.SoundBox;
-import dys.clms.bean.db.config.SoundCard;
-
 /**
  * Created by dys on 2016/6/29 0029.
  * 常用配置表
  */
 public class Configurations extends DataSupport {
-    private long id;
-    private CPU mCPU;
-    private Memory mMemory;
-    private HardDisk mHardDisk;
-    private GPU mGPU;
-    private Screen mScreen;
-    private CDDriver mCDDriver;
-    private SoftDriver mSoftDriver;
-    private SoundCard mSoundCard;
-    private Keyboard mKeyboard;
-    private Mouse mMouse;
-    private Box mBox;
-    private SoundBox mSoundBox;
-    private NetworkCard mNetworkCard;
-    private Mainboard mMainboard;
 
-    public long getId() {
-        return id;
+    private String cpu;
+    private String memory;
+    private String hardDisk;
+    private String gpu;
+    private String screen;
+    private String cdDriver;
+    private String softDriver;
+    private String soundCard;
+    private String keyboard;
+    private String mouse;
+    private String box;
+    private String soundBox;
+    private String networkCard;
+    private String mainboard;
+
+    public String getCpu() {
+        return cpu;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setCpu(String cpu) {
+        this.cpu = cpu;
     }
 
-    public CPU getCPU() {
-        return mCPU;
+    public String getMemory() {
+        return memory;
     }
 
-    public void setCPU(CPU CPU) {
-        mCPU = CPU;
+    public void setMemory(String memory) {
+        this.memory = memory;
     }
 
-    public Memory getMemory() {
-        return mMemory;
+    public String getHardDisk() {
+        return hardDisk;
     }
 
-    public void setMemory(Memory memory) {
-        mMemory = memory;
+    public void setHardDisk(String hardDisk) {
+        this.hardDisk = hardDisk;
     }
 
-    public HardDisk getHardDisk() {
-        return mHardDisk;
+    public String getGpu() {
+        return gpu;
     }
 
-    public void setHardDisk(HardDisk hardDisk) {
-        mHardDisk = hardDisk;
+    public void setGpu(String gpu) {
+        this.gpu = gpu;
     }
 
-    public GPU getGPU() {
-        return mGPU;
+    public String getScreen() {
+        return screen;
     }
 
-    public void setGPU(GPU GPU) {
-        mGPU = GPU;
+    public void setScreen(String screen) {
+        this.screen = screen;
     }
 
-    public Screen getScreen() {
-        return mScreen;
+    public String getCdDriver() {
+        return cdDriver;
     }
 
-    public void setScreen(Screen screen) {
-        mScreen = screen;
+    public void setCdDriver(String cdDriver) {
+        this.cdDriver = cdDriver;
     }
 
-    public CDDriver getCDDriver() {
-        return mCDDriver;
+    public String getSoftDriver() {
+        return softDriver;
     }
 
-    public void setCDDriver(CDDriver CDDriver) {
-        mCDDriver = CDDriver;
+    public void setSoftDriver(String softDriver) {
+        this.softDriver = softDriver;
     }
 
-    public SoftDriver getSoftDriver() {
-        return mSoftDriver;
+    public String getSoundCard() {
+        return soundCard;
     }
 
-    public void setSoftDriver(SoftDriver softDriver) {
-        mSoftDriver = softDriver;
+    public void setSoundCard(String soundCard) {
+        this.soundCard = soundCard;
     }
 
-    public SoundCard getSoundCard() {
-        return mSoundCard;
+    public String getKeyboard() {
+        return keyboard;
     }
 
-    public void setSoundCard(SoundCard soundCard) {
-        mSoundCard = soundCard;
+    public void setKeyboard(String keyboard) {
+        this.keyboard = keyboard;
     }
 
-    public Keyboard getKeyboard() {
-        return mKeyboard;
+    public String getMouse() {
+        return mouse;
     }
 
-    public void setKeyboard(Keyboard keyboard) {
-        mKeyboard = keyboard;
+    public void setMouse(String mouse) {
+        this.mouse = mouse;
     }
 
-    public Mouse getMouse() {
-        return mMouse;
+    public String getBox() {
+        return box;
     }
 
-    public void setMouse(Mouse mouse) {
-        mMouse = mouse;
+    public void setBox(String box) {
+        this.box = box;
     }
 
-    public Box getBox() {
-        return mBox;
+    public String getSoundBox() {
+        return soundBox;
     }
 
-    public void setBox(Box box) {
-        mBox = box;
+    public void setSoundBox(String soundBox) {
+        this.soundBox = soundBox;
     }
 
-    public SoundBox getSoundBox() {
-        return mSoundBox;
+    public String getNetworkCard() {
+        return networkCard;
     }
 
-    public void setSoundBox(SoundBox soundBox) {
-        mSoundBox = soundBox;
+    public void setNetworkCard(String networkCard) {
+        this.networkCard = networkCard;
     }
 
-    public NetworkCard getNetworkCard() {
-        return mNetworkCard;
+    public String getMainboard() {
+        return mainboard;
     }
 
-    public void setNetworkCard(NetworkCard networkCard) {
-        mNetworkCard = networkCard;
-    }
-
-    public Mainboard getMainboard() {
-        return mMainboard;
-    }
-
-    public void setMainboard(Mainboard mainboard) {
-        mMainboard = mainboard;
+    public void setMainboard(String mainboard) {
+        this.mainboard = mainboard;
     }
 }

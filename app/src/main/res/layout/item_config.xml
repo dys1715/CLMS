@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@drawable/item_corner"
-    android:layout_marginBottom="2dp"
-    android:padding="6dp">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="2dp"
+              android:background="@drawable/item_corner"
+              android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tv_config_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:paddingBottom="6dp"
-            android:paddingRight="6dp"
-            android:paddingTop="4dp"
-            android:paddingLeft="6dp"
-            android:text="主板"/>
+            android:paddingLeft="10dp"
+            android:layout_centerVertical="true"
+            android:text="主板"
+            android:textSize="18sp"/>
+
         <TextView
             android:id="@+id/tv_edit"
             android:layout_width="100dp"
-            android:gravity="right"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:textSize="16dp"
+            android:gravity="right"
             android:paddingBottom="6dp"
             android:paddingRight="6dp"
             android:paddingTop="4dp"
             android:text="编辑"/>
     </RelativeLayout>
+
     <dys.clms.view.NoScrollGridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"

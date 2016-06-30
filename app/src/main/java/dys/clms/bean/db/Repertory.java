@@ -5,7 +5,7 @@ import org.litepal.crud.DataSupport;
 /**
  * Created by dys on 2016/6/29 0029.
  */
-public class Repertroy extends DataSupport {
+public class Repertory extends DataSupport {
     private long id;
     private int repe_classify;
     private int rent_state;     //0：未出租，1：已出租

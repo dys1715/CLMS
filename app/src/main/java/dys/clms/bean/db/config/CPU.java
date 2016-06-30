@@ -6,22 +6,13 @@ import org.litepal.crud.DataSupport;
  * Created by dys on 2016/6/29 0029.
  */
 public class CPU extends DataSupport {
-    private long id;
-    private String cpu;
+    private String name;
 
-    public long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getCpu() {
-        return cpu;
-    }
-
-    public void setCpu(String cpu) {
-        this.cpu = cpu;
+    public void setName(String name) {
+        this.name = name;
     }
 }

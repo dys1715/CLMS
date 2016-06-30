@@ -7,22 +7,13 @@ import org.litepal.crud.DataSupport;
  * 机箱
  */
 public class Box extends DataSupport {
-    private long id;
-    private String box;
+    private String name;
 
-    public long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getbox() {
-        return box;
-    }
-
-    public void setbox(String box) {
-        this.box = box;
+    public void setName(String name) {
+        this.name = name;
     }
 }

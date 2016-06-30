@@ -31,7 +31,27 @@
             <mapping class="com.test.model.Magazine"></mapping>
         </list>
     -->
-    <list></list>
+    <list>
+        <mapping class="dys.clms.bean.db.Configurations"/>
+        <mapping class="dys.clms.bean.db.CustomerClassify"/>
+        <mapping class="dys.clms.bean.db.Pact"/>
+        <mapping class="dys.clms.bean.db.RepeClassify"/>
+        <mapping class="dys.clms.bean.db.Repertory"/>
+        <mapping class="dys.clms.bean.db.config.Box"/>
+        <mapping class="dys.clms.bean.db.config.CDDriver"/>
+        <mapping class="dys.clms.bean.db.config.CPU"/>
+        <mapping class="dys.clms.bean.db.config.GPU"/>
+        <mapping class="dys.clms.bean.db.config.HardDisk"/>
+        <mapping class="dys.clms.bean.db.config.Keyboard"/>
+        <mapping class="dys.clms.bean.db.config.Mainboard"/>
+        <mapping class="dys.clms.bean.db.config.Memory"/>
+        <mapping class="dys.clms.bean.db.config.Mouse"/>
+        <mapping class="dys.clms.bean.db.config.NetworkCard"/>
+        <mapping class="dys.clms.bean.db.config.Screen"/>
+        <mapping class="dys.clms.bean.db.config.SoftDriver"/>
+        <mapping class="dys.clms.bean.db.config.SoundBox"/>
+        <mapping class="dys.clms.bean.db.config.SoundCard"/>
+    </list>
 
     <!--
         Define where the .db file should be. "internal" means the .db file

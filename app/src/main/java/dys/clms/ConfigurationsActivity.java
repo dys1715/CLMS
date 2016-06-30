@@ -1,23 +1,25 @@
 package dys.clms;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
+
+import org.litepal.crud.DataSupport;
+import org.litepal.tablemanager.Connector;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import dys.clms.bean.Config;
+import dys.clms.bean.db.config.CPU;
 import dys.clms.view.NoScrollGridView;
 
 /**
@@ -26,42 +28,68 @@ import dys.clms.view.NoScrollGridView;
  */
 public class ConfigurationsActivity extends BaseActivity {
 
-    private RecyclerView configList;
+    private RecyclerView rvConfig;
     private MyAdapter adapter;
     private ArrayList<Config> configs = new ArrayList<>();
-    private ArrayList<String> configsItem;
+    private ArrayList<String> cpuList, memoryList, hardDiskList, mainboardList, gpuList, screenList, boxList;
+    private ArrayList<String> keyboardList, mouseList, cdDriverList, softDriverList, soundCardList, soundBoxList, networkCardList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configurations_activity);
         initData();
-        configList = (RecyclerView) findViewById(R.id.rv_config);
-        configList.setLayoutManager(new LinearLayoutManager(mContext));
+        rvConfig = (RecyclerView) findViewById(R.id.rv_config);
+        rvConfig.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new MyAdapter();
-        configList.setAdapter(adapter);
+        rvConfig.setAdapter(adapter);
+        getConfigDatasFromDB("cpu",cpuList);
     }
 
     private void initData() {
-        //插入假数据
-        configsItem = new ArrayList<>();
-        for (int j = 0; j < 5; j++) {
-            configsItem.add(j + "");
-        }
-        configs.add(new Config("CPU", configsItem));
-        configs.add(new Config("内存", configsItem));
-        configs.add(new Config("硬盘", configsItem));
-        configs.add(new Config("主板", configsItem));
-        configs.add(new Config("显卡", configsItem));
-        configs.add(new Config("显示器", configsItem));
-        configs.add(new Config("机箱", configsItem));
-        configs.add(new Config("键盘", configsItem));
-        configs.add(new Config("鼠标", configsItem));
-        configs.add(new Config("光驱", configsItem));
-        configs.add(new Config("软驱", configsItem));
-        configs.add(new Config("声卡", configsItem));
-        configs.add(new Config("网卡", configsItem));
+        cpuList = new ArrayList<>();
+        memoryList = new ArrayList<>();
+        hardDiskList = new ArrayList<>();
+        mainboardList = new ArrayList<>();
+        gpuList = new ArrayList<>();
+        screenList = new ArrayList<>();
+        boxList = new ArrayList<>();
+        keyboardList = new ArrayList<>();
+        mouseList = new ArrayList<>();
+        cdDriverList = new ArrayList<>();
+        softDriverList = new ArrayList<>();
+        soundCardList = new ArrayList<>();
+        soundBoxList = new ArrayList<>();
+        networkCardList = new ArrayList<>();
+//        DataSupport.deleteAll(CPU.class);
 
+//        CPU cpu = new CPU();
+//        cpu.setCpu("i7 4670");
+//        cpu.save();
+
+//        Configurations configurations = new Configurations();
+//        configurations.setCpu("i7 4770k");
+//        configurations.setMemory("ADATA 1600 8G");
+//        configurations.setMainboard("H61");
+//        configurations.setBox("box1111");
+//        configurations.setKeyboard("yyyy");
+//        configurations.setHardDisk("sigate500");
+//        configurations.save();
+
+        configs.add(new Config("CPU", cpuList));
+        configs.add(new Config("内存", memoryList));
+        configs.add(new Config("硬盘", hardDiskList));
+        configs.add(new Config("主板", mainboardList));
+        configs.add(new Config("显卡", gpuList));
+        configs.add(new Config("显示器", screenList));
+        configs.add(new Config("机箱", boxList));
+        configs.add(new Config("键盘", keyboardList));
+        configs.add(new Config("鼠标", mouseList));
+        configs.add(new Config("音箱", soundBoxList));
+        configs.add(new Config("光驱", cdDriverList));
+        configs.add(new Config("软驱", softDriverList));
+        configs.add(new Config("声卡", soundCardList));
+        configs.add(new Config("网卡", networkCardList));
     }
 
     @Override
@@ -72,13 +100,72 @@ public class ConfigurationsActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            Log.e("aaaaaaaaaaaaa", "------------------------------");
             ArrayList<String> gridList = data.getStringArrayListExtra("listData");
             int position = data.getIntExtra("position", -1);
+            String title = configs.get(position).getConfigTitle();
             configs.remove(position);
-            configs.add(position, new Config(position + "", gridList));
+            configs.add(position, new Config(title + "", gridList));
             adapter.notifyDataSetChanged();
         }
+    }
+
+    private void getConfigDatasFromDB(final String tab, final ArrayList<String> list) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Cursor cursor = null;
+                try {
+                    cursor = Connector.getDatabase()
+                            .rawQuery("select * from " + tab + " order by id", null);
+                    if (cursor.moveToFirst()) {
+                        do {
+                            String name = cursor.getString(cursor.getColumnIndex("name"));
+                            list.add(name);
+//                            String cpu = cursor.getString(cursor.getColumnIndex("cpu"));
+//                            String memory = cursor.getString(cursor.getColumnIndex("memory"));
+//                            String mainboard = cursor.getString(cursor.getColumnIndex("mainboard"));
+//                            String hardDisk = cursor.getString(cursor.getColumnIndex("harddisk"));
+//                            String gpu = cursor.getString(cursor.getColumnIndex("gpu"));
+//                            String screen = cursor.getString(cursor.getColumnIndex("screen"));
+//                            String cdDriver = cursor.getString(cursor.getColumnIndex("cddriver"));
+//                            String softDriver = cursor.getString(cursor.getColumnIndex("softdriver"));
+//                            String soundCard = cursor.getString(cursor.getColumnIndex("soundcard"));
+//                            String keyboard = cursor.getString(cursor.getColumnIndex("keyboard"));
+//                            String mouse = cursor.getString(cursor.getColumnIndex("mouse"));
+//                            String box = cursor.getString(cursor.getColumnIndex("box"));
+//                            String soundBox = cursor.getString(cursor.getColumnIndex("soundbox"));
+//                            String networkCard = cursor.getString(cursor.getColumnIndex("networkcard"));
+//                            cpuList.add(cpu);
+//                            memoryList.add(memory);
+//                            mainboardList.add(mainboard);
+//                            hardDiskList.add(hardDisk);
+//                            gpuList.add(gpu);
+//                            screenList.add(screen);
+//                            cdDriverList.add(cdDriver);
+//                            softDriverList.add(softDriver);
+//                            soundCardList.add(soundCard);
+//                            keyboardList.add(keyboard);
+//                            mouseList.add(mouse);
+//                            boxList.add(box);
+//                            soundBoxList.add(soundBox);
+//                            networkCardList.add(networkCard);
+                        } while (cursor.moveToNext());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (cursor != null) {
+                        cursor.close();
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+//                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -99,11 +186,13 @@ public class ConfigurationsActivity extends BaseActivity {
 //            gridList = configs.get(position).getConfig();
             adapter = new GridAdapter(configs.get(position).getConfig());
             holder.gridView.setAdapter(adapter);
+            //编辑按钮
             holder.edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivityForResult(new Intent(mContext, ConfigDetailsActivity.class)
                             .putExtra("position", position)
+                            .putExtra("title", configs.get(position).getConfigTitle())
                             .putStringArrayListExtra("gridList", configs.get(position).getConfig()), 1000);
                 }
             });

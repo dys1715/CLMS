@@ -16,11 +16,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dys.clms.bean.db.Configurations;
+import dys.clms.bean.db.config.CPU;
 
 /**
  * Created by dys on 2016/6/28 0028.
@@ -30,11 +34,12 @@ public class ConfigDetailsActivity extends BaseActivity {
 
     private ArrayList<String> detailsData;
     private DetailsAdapter mAdapter;
+    private String itemTitle;
     @BindView(R.id.lv_config_details)
     ListView mLvConfigDetails;
     @BindView(R.id.btn_add)
     Button mBtnAdd;
-
+    //新增数据
     @OnClick(R.id.btn_add)
     public void onClick() {
         final EditText editText = new EditText(mContext);
@@ -44,6 +49,9 @@ public class ConfigDetailsActivity extends BaseActivity {
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        CPU cpu = new CPU();
+                        cpu.setName(editText.getText().toString().trim());
+                        cpu.save();
                         detailsData.add(editText.getText().toString().trim());
                         mAdapter.notifyDataSetChanged();
                     }
@@ -64,6 +72,8 @@ public class ConfigDetailsActivity extends BaseActivity {
         ButterKnife.bind(this);
         //获取列表
         detailsData = getIntent().getStringArrayListExtra("gridList");
+        //获取分类名
+        itemTitle = getIntent().getStringExtra("title");
         //设置适配器
         mAdapter = new DetailsAdapter();
         mLvConfigDetails.setAdapter(mAdapter);
@@ -134,9 +144,11 @@ public class ConfigDetailsActivity extends BaseActivity {
                 holder = (ViewHolder) convertView.getTag();
             }
             holder.tvName.setText(detailsData.get(position));
+            //删除一条数据
             holder.ivDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    DataSupport.deleteAll(CPU.class,"name=?",detailsData.get(position).trim());
                     detailsData.remove(position);
                     notifyDataSetChanged();
                 }

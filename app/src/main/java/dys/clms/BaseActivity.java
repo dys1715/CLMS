@@ -41,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void setTitle(String title){
         mToolbar.setTitle(title);
         setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(android.R.drawable.ic_media_rew);
+        mToolbar.setNavigationIcon(R.mipmap.icon_back);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

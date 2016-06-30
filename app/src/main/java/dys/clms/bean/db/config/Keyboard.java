@@ -7,22 +7,13 @@ import org.litepal.crud.DataSupport;
  * 键盘
  */
 public class Keyboard extends DataSupport {
-    private long id;
-    private String keyboard;
+    private String name;
 
-    public long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getkeyboard() {
-        return keyboard;
-    }
-
-    public void setkeyboard(String keyboard) {
-        this.keyboard = keyboard;
+    public void setName(String name) {
+        this.name = name;
     }
 }

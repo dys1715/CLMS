@@ -7,22 +7,13 @@ import org.litepal.crud.DataSupport;
  * 鼠标
  */
 public class Mouse extends DataSupport {
-    private long id;
-    private String mouse;
+    private String name;
 
-    public long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getmouse() {
-        return mouse;
-    }
-
-    public void setmouse(String mouse) {
-        this.mouse = mouse;
+    public void setName(String name) {
+        this.name = name;
     }
 }

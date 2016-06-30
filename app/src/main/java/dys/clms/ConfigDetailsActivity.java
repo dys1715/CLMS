@@ -24,7 +24,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dys.clms.bean.db.Configurations;
+import dys.clms.bean.db.config.Box;
+import dys.clms.bean.db.config.CDDriver;
 import dys.clms.bean.db.config.CPU;
+import dys.clms.bean.db.config.GPU;
+import dys.clms.bean.db.config.HardDisk;
+import dys.clms.bean.db.config.Keyboard;
+import dys.clms.bean.db.config.Mainboard;
+import dys.clms.bean.db.config.Memory;
+import dys.clms.bean.db.config.Mouse;
+import dys.clms.bean.db.config.NetworkCard;
+import dys.clms.bean.db.config.Screen;
+import dys.clms.bean.db.config.SoftDriver;
+import dys.clms.bean.db.config.SoundBox;
+import dys.clms.bean.db.config.SoundCard;
 
 /**
  * Created by dys on 2016/6/28 0028.
@@ -39,6 +52,7 @@ public class ConfigDetailsActivity extends BaseActivity {
     ListView mLvConfigDetails;
     @BindView(R.id.btn_add)
     Button mBtnAdd;
+
     //新增数据
     @OnClick(R.id.btn_add)
     public void onClick() {
@@ -49,9 +63,7 @@ public class ConfigDetailsActivity extends BaseActivity {
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        CPU cpu = new CPU();
-                        cpu.setName(editText.getText().toString().trim());
-                        cpu.save();
+                        saveData(editText.getText().toString().trim());
                         detailsData.add(editText.getText().toString().trim());
                         mAdapter.notifyDataSetChanged();
                     }
@@ -88,6 +100,133 @@ public class ConfigDetailsActivity extends BaseActivity {
                 setResult();
             }
         });
+    }
+
+    private void saveData(String name) {
+        switch (itemTitle) {
+            case "CPU":
+                CPU cpu = new CPU();
+                cpu.setName(name);
+                cpu.save();
+                break;
+            case "内存":
+                Memory memory = new Memory();
+                memory.setName(name);
+                memory.save();
+                break;
+            case "硬盘":
+                HardDisk hardDisk = new HardDisk();
+                hardDisk.setName(name);
+                hardDisk.save();
+                break;
+            case "主板":
+                Mainboard mainboard = new Mainboard();
+                mainboard.setName(name);
+                mainboard.save();
+                break;
+            case "显卡":
+                GPU gpu = new GPU();
+                gpu.setName(name);
+                gpu.save();
+                break;
+            case "显示器":
+                Screen screen = new Screen();
+                screen.setName(name);
+                screen.save();
+                break;
+            case "机箱":
+                Box box = new Box();
+                box.setName(name);
+                box.save();
+                break;
+            case "键盘":
+                Keyboard keyboard = new Keyboard();
+                keyboard.setName(name);
+                keyboard.save();
+                break;
+            case "鼠标":
+                Mouse mouse = new Mouse();
+                mouse.setName(name);
+                mouse.save();
+                break;
+            case "音箱":
+                SoundBox soundBox = new SoundBox();
+                soundBox.setName(name);
+                soundBox.save();
+                break;
+            case "光驱":
+                CDDriver cdDriver = new CDDriver();
+                cdDriver.setName(name);
+                cdDriver.save();
+                break;
+            case "软驱":
+                SoftDriver softDriver = new SoftDriver();
+                softDriver.setName(name);
+                softDriver.save();
+                break;
+            case "声卡":
+                SoundCard soundCard = new SoundCard();
+                soundCard.setName(name);
+                soundCard.save();
+                break;
+            case "网卡":
+                NetworkCard networkCard = new NetworkCard();
+                networkCard.setName(name);
+                networkCard.save();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void deleteData(String name) {
+        switch (itemTitle) {
+            case "CPU":
+                DataSupport.deleteAll(CPU.class, "name=?", name);
+                break;
+            case "内存":
+                DataSupport.deleteAll(Memory.class, "name=?", name);
+                break;
+            case "硬盘":
+                DataSupport.deleteAll(HardDisk.class, "name=?", name);
+                break;
+            case "主板":
+                DataSupport.deleteAll(Mainboard.class, "name=?", name);
+                break;
+            case "显卡":
+                DataSupport.deleteAll(GPU.class, "name=?", name);
+                break;
+            case "显示器":
+                DataSupport.deleteAll(Screen.class, "name=?", name);
+                break;
+            case "机箱":
+                DataSupport.deleteAll(Box.class, "name=?", name);
+                break;
+            case "键盘":
+                DataSupport.deleteAll(Keyboard.class, "name=?", name);
+                break;
+            case "鼠标":
+                DataSupport.deleteAll(Mouse.class, "name=?", name);
+                break;
+            case "音箱":
+                DataSupport.deleteAll(SoundBox.class, "name=?", name);
+                break;
+            case "光驱":
+                DataSupport.deleteAll(CDDriver.class, "name=?", name);
+                break;
+            case "软驱":
+                DataSupport.deleteAll(SoftDriver.class, "name=?", name);
+                break;
+            case "声卡":
+                DataSupport.deleteAll(SoundCard.class, "name=?", name);
+                break;
+            case "网卡":
+                DataSupport.deleteAll(NetworkCard.class, "name=?", name);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -148,7 +287,7 @@ public class ConfigDetailsActivity extends BaseActivity {
             holder.ivDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DataSupport.deleteAll(CPU.class,"name=?",detailsData.get(position).trim());
+                    deleteData(detailsData.get(position).trim());
                     detailsData.remove(position);
                     notifyDataSetChanged();
                 }

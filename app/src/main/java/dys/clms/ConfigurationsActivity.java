@@ -12,14 +12,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.litepal.crud.DataSupport;
 import org.litepal.tablemanager.Connector;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import dys.clms.bean.Config;
-import dys.clms.bean.db.config.CPU;
 import dys.clms.view.NoScrollGridView;
 
 /**
@@ -44,6 +42,19 @@ public class ConfigurationsActivity extends BaseActivity {
         adapter = new MyAdapter();
         rvConfig.setAdapter(adapter);
         getConfigDatasFromDB("cpu",cpuList);
+        getConfigDatasFromDB("memory",memoryList);
+        getConfigDatasFromDB("harddisk",hardDiskList);
+        getConfigDatasFromDB("mainboard",mainboardList);
+        getConfigDatasFromDB("gpu",gpuList);
+        getConfigDatasFromDB("screen",screenList);
+        getConfigDatasFromDB("box",boxList);
+        getConfigDatasFromDB("keyboard",keyboardList);
+        getConfigDatasFromDB("mouse",mouseList);
+        getConfigDatasFromDB("cddriver",cdDriverList);
+        getConfigDatasFromDB("softdriver",softDriverList);
+        getConfigDatasFromDB("soundcard",soundCardList);
+        getConfigDatasFromDB("soundbox",soundBoxList);
+        getConfigDatasFromDB("networkcard",networkCardList);
     }
 
     private void initData() {

@@ -7,22 +7,13 @@ import org.litepal.crud.DataSupport;
  * 内存
  */
 public class Memory extends DataSupport {
-    private long id;
-    private String memory;
+    private String name;
 
-    public long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getmemory() {
-        return memory;
-    }
-
-    public void setmemory(String memory) {
-        this.memory = memory;
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -6,22 +6,13 @@ import org.litepal.crud.DataSupport;
  * Created by dys on 2016/6/29 0029.
  */
 public class GPU extends DataSupport {
-    private long id;
-    private String gpu;
+    private String name;
 
-    public long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getgpu() {
-        return gpu;
-    }
-
-    public void setgpu(String gpu) {
-        this.gpu = gpu;
+    public void setName(String name) {
+        this.name = name;
     }
 }

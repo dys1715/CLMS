@@ -7,22 +7,13 @@ import org.litepal.crud.DataSupport;
  * 光驱
  */
 public class CDDriver extends DataSupport {
-    private long id;
-    private String cdDriver;
+    private String name;
 
-    public long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getcdDriver() {
-        return cdDriver;
-    }
-
-    public void setcdDriver(String cdDriver) {
-        this.cdDriver = cdDriver;
+    public void setName(String name) {
+        this.name = name;
     }
 }

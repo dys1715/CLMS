@@ -7,22 +7,13 @@ import org.litepal.crud.DataSupport;
  * 硬盘
  */
 public class HardDisk extends DataSupport {
-    private long id;
-    private String hardDisk;
+    private String name;
 
-    public long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String gethardDisk() {
-        return hardDisk;
-    }
-
-    public void sethardDisk(String hardDisk) {
-        this.hardDisk = hardDisk;
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -7,22 +7,13 @@ import org.litepal.crud.DataSupport;
  * 音箱
  */
 public class SoundBox extends DataSupport {
-    private long id;
-    private String soundBox;
+    private String name;
 
-    public long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getsoundBox() {
-        return soundBox;
-    }
-
-    public void setsoundBox(String soundBox) {
-        this.soundBox = soundBox;
+    public void setName(String name) {
+        this.name = name;
     }
 }

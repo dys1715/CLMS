@@ -7,22 +7,13 @@ import org.litepal.crud.DataSupport;
  * 软驱
  */
 public class SoftDriver extends DataSupport {
-    private long id;
-    private String softDriver;
+    private String name;
 
-    public long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getsoftDriver() {
-        return softDriver;
-    }
-
-    public void setsoftDriver(String softDriver) {
-        this.softDriver = softDriver;
+    public void setName(String name) {
+        this.name = name;
     }
 }

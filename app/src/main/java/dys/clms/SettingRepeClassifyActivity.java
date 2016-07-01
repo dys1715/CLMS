@@ -1,6 +1,7 @@
 package dys.clms;
 
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -13,12 +14,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.litepal.crud.DataSupport;
+import org.litepal.tablemanager.Connector;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dys.clms.bean.db.RepeClassify;
 
 /**
  * Created by dys on 2016/6/28 0028.
@@ -39,12 +45,9 @@ public class SettingRepeClassifyActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config_details);
         ButterKnife.bind(this);
-        //插入假数据
-        for (int i = 0; i < 10; i++) {
-            repeList.add(i + "");
-        }
         adapter = new MyClassifyAdapter();
         mLvConfigDetails.setAdapter(adapter);
+        getDataFromDB("repeclassify");
     }
 
     @Override
@@ -61,6 +64,9 @@ public class SettingRepeClassifyActivity extends BaseActivity {
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        RepeClassify repeClassify = new RepeClassify();
+                        repeClassify.setName(editText.getText().toString().trim());
+                        repeClassify.save();
                         repeList.add(editText.getText().toString().trim());
                         adapter.notifyDataSetChanged();
                     }
@@ -72,6 +78,43 @@ public class SettingRepeClassifyActivity extends BaseActivity {
                     }
                 })
                 .show();
+    }
+
+    private void getDataFromDB(final String tab) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Cursor cursor = null;
+                try {
+                    cursor = Connector.getDatabase().rawQuery("select * from " + tab + " order by id", null);
+                    if (cursor.moveToFirst()) {
+                        do {
+                            String name = cursor.getString(cursor.getColumnIndex("name"));
+                            repeList.add(name);
+                        } while (cursor.moveToNext());
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, "没有数据", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (cursor != null) {
+                        cursor.close();
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     class MyClassifyAdapter extends BaseAdapter {
@@ -107,6 +150,7 @@ public class SettingRepeClassifyActivity extends BaseActivity {
             holder.ivDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    DataSupport.deleteAll(RepeClassify.class, "name=?", repeList.get(position));
                     repeList.remove(position);
                     notifyDataSetChanged();
                 }
@@ -114,7 +158,7 @@ public class SettingRepeClassifyActivity extends BaseActivity {
             return convertView;
         }
 
-        class ViewHolder{
+        class ViewHolder {
             TextView tvName;
             ImageView ivDelete;
         }

@@ -32,7 +32,6 @@
         </list>
     -->
     <list>
-        <mapping class="dys.clms.bean.db.Configurations"/>
         <mapping class="dys.clms.bean.db.CustomerClassify"/>
         <mapping class="dys.clms.bean.db.Pact"/>
         <mapping class="dys.clms.bean.db.RepeClassify"/>

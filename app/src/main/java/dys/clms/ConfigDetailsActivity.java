@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import dys.clms.bean.db.Configurations;
 import dys.clms.bean.db.config.Box;
 import dys.clms.bean.db.config.CDDriver;
 import dys.clms.bean.db.config.CPU;

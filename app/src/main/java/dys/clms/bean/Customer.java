@@ -5,11 +5,11 @@ package dys.clms.bean;
  */
 public class Customer {
     private String classify;
-    private String discountRate;
+    private int rate;
 
-    public Customer(String classify, String discountRate) {
+    public Customer(String classify, int rate) {
         this.classify = classify;
-        this.discountRate = discountRate;
+        this.rate = rate;
     }
 
     public String getClassify() {
@@ -20,11 +20,11 @@ public class Customer {
         this.classify = classify;
     }
 
-    public String getDiscountRate() {
-        return discountRate;
+    public int getRate() {
+        return rate;
     }
 
-    public void setDiscountRate(String discountRate) {
-        this.discountRate = discountRate;
+    public void setRate(int rate) {
+        this.rate = rate;
     }
 }

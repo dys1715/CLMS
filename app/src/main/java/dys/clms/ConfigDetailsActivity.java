@@ -93,7 +93,7 @@ public class ConfigDetailsActivity extends BaseActivity {
 
     @Override
     protected void initTitle() {
-        setTitle("编辑配置");
+        setTitle(getIntent().getStringExtra("title"));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

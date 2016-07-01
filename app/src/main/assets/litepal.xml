@@ -51,6 +51,7 @@
         <mapping class="dys.clms.bean.db.config.SoftDriver"/>
         <mapping class="dys.clms.bean.db.config.SoundBox"/>
         <mapping class="dys.clms.bean.db.config.SoundCard"/>
+        <mapping class="dys.clms.bean.db.CompanyInfo"/>
     </list>
 
     <!--

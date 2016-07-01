@@ -41,20 +41,26 @@ public class ConfigurationsActivity extends BaseActivity {
         rvConfig.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new MyAdapter();
         rvConfig.setAdapter(adapter);
-        getConfigDatasFromDB("cpu",cpuList);
-        getConfigDatasFromDB("memory",memoryList);
-        getConfigDatasFromDB("harddisk",hardDiskList);
-        getConfigDatasFromDB("mainboard",mainboardList);
-        getConfigDatasFromDB("gpu",gpuList);
-        getConfigDatasFromDB("screen",screenList);
-        getConfigDatasFromDB("box",boxList);
-        getConfigDatasFromDB("keyboard",keyboardList);
-        getConfigDatasFromDB("mouse",mouseList);
-        getConfigDatasFromDB("cddriver",cdDriverList);
-        getConfigDatasFromDB("softdriver",softDriverList);
-        getConfigDatasFromDB("soundcard",soundCardList);
-        getConfigDatasFromDB("soundbox",soundBoxList);
-        getConfigDatasFromDB("networkcard",networkCardList);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getConfigDatasFromDB("cpu",cpuList);
+                getConfigDatasFromDB("memory",memoryList);
+                getConfigDatasFromDB("harddisk",hardDiskList);
+                getConfigDatasFromDB("mainboard",mainboardList);
+                getConfigDatasFromDB("gpu",gpuList);
+                getConfigDatasFromDB("screen",screenList);
+                getConfigDatasFromDB("box",boxList);
+                getConfigDatasFromDB("keyboard",keyboardList);
+                getConfigDatasFromDB("mouse",mouseList);
+                getConfigDatasFromDB("cddriver",cdDriverList);
+                getConfigDatasFromDB("softdriver",softDriverList);
+                getConfigDatasFromDB("soundcard",soundCardList);
+                getConfigDatasFromDB("soundbox",soundBoxList);
+                getConfigDatasFromDB("networkcard",networkCardList);
+            }
+        }).start();
+
     }
 
     private void initData() {
@@ -72,20 +78,6 @@ public class ConfigurationsActivity extends BaseActivity {
         soundCardList = new ArrayList<>();
         soundBoxList = new ArrayList<>();
         networkCardList = new ArrayList<>();
-//        DataSupport.deleteAll(CPU.class);
-
-//        CPU cpu = new CPU();
-//        cpu.setCpu("i7 4670");
-//        cpu.save();
-
-//        Configurations configurations = new Configurations();
-//        configurations.setCpu("i7 4770k");
-//        configurations.setMemory("ADATA 1600 8G");
-//        configurations.setMainboard("H61");
-//        configurations.setBox("box1111");
-//        configurations.setKeyboard("yyyy");
-//        configurations.setHardDisk("sigate500");
-//        configurations.save();
 
         configs.add(new Config("CPU", cpuList));
         configs.add(new Config("内存", memoryList));
@@ -120,6 +112,11 @@ public class ConfigurationsActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 获取所有配置信息
+     * @param tab
+     * @param list
+     */
     private void getConfigDatasFromDB(final String tab, final ArrayList<String> list) {
         new Thread(new Runnable() {
             @Override
@@ -132,34 +129,6 @@ public class ConfigurationsActivity extends BaseActivity {
                         do {
                             String name = cursor.getString(cursor.getColumnIndex("name"));
                             list.add(name);
-//                            String cpu = cursor.getString(cursor.getColumnIndex("cpu"));
-//                            String memory = cursor.getString(cursor.getColumnIndex("memory"));
-//                            String mainboard = cursor.getString(cursor.getColumnIndex("mainboard"));
-//                            String hardDisk = cursor.getString(cursor.getColumnIndex("harddisk"));
-//                            String gpu = cursor.getString(cursor.getColumnIndex("gpu"));
-//                            String screen = cursor.getString(cursor.getColumnIndex("screen"));
-//                            String cdDriver = cursor.getString(cursor.getColumnIndex("cddriver"));
-//                            String softDriver = cursor.getString(cursor.getColumnIndex("softdriver"));
-//                            String soundCard = cursor.getString(cursor.getColumnIndex("soundcard"));
-//                            String keyboard = cursor.getString(cursor.getColumnIndex("keyboard"));
-//                            String mouse = cursor.getString(cursor.getColumnIndex("mouse"));
-//                            String box = cursor.getString(cursor.getColumnIndex("box"));
-//                            String soundBox = cursor.getString(cursor.getColumnIndex("soundbox"));
-//                            String networkCard = cursor.getString(cursor.getColumnIndex("networkcard"));
-//                            cpuList.add(cpu);
-//                            memoryList.add(memory);
-//                            mainboardList.add(mainboard);
-//                            hardDiskList.add(hardDisk);
-//                            gpuList.add(gpu);
-//                            screenList.add(screen);
-//                            cdDriverList.add(cdDriver);
-//                            softDriverList.add(softDriver);
-//                            soundCardList.add(soundCard);
-//                            keyboardList.add(keyboard);
-//                            mouseList.add(mouse);
-//                            boxList.add(box);
-//                            soundBoxList.add(soundBox);
-//                            networkCardList.add(networkCard);
                         } while (cursor.moveToNext());
                     }
                 } catch (Exception e) {

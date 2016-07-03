@@ -7,8 +7,9 @@ import org.litepal.crud.DataSupport;
  * 库存表
  */
 public class Repertory extends DataSupport {
-    private int repe_classify_name;  //笔记本、手机……
-    private int rent_state;     //0：未出租，1：已出租
+    private String repe_classify_name;  //笔记本、手机……
+    private String repe_id;     //库存编号
+    private String rent_state;     //未出租，已出租
     private float rent;         //租金
     private float deposit;      //押金
     private String cpu;
@@ -25,20 +26,58 @@ public class Repertory extends DataSupport {
     private String soundBox;
     private String networkCard;
     private String mainboard;
+    private String remark;
 
-    public int getRepe_classify_name() {
+    public Repertory() {
+    }
+
+    public Repertory(String repe_classify_name, String repe_id, String rent_state, float rent, float deposit,
+                     String cpu, String memory, String hardDisk, String gpu, String screen,
+                     String cdDriver, String softDriver, String soundCard, String keyboard, String mouse,
+                     String box, String soundBox, String networkCard, String mainboard,String remark) {
+        this.repe_classify_name = repe_classify_name;
+        this.repe_id = repe_id;
+        this.rent_state = rent_state;
+        this.rent = rent;
+        this.deposit = deposit;
+        this.cpu = cpu;
+        this.memory = memory;
+        this.hardDisk = hardDisk;
+        this.gpu = gpu;
+        this.screen = screen;
+        this.cdDriver = cdDriver;
+        this.softDriver = softDriver;
+        this.soundCard = soundCard;
+        this.keyboard = keyboard;
+        this.mouse = mouse;
+        this.box = box;
+        this.soundBox = soundBox;
+        this.networkCard = networkCard;
+        this.mainboard = mainboard;
+        this.remark = remark;
+    }
+
+    public String getRepe_classify_name() {
         return repe_classify_name;
     }
 
-    public void setRepe_classify_name(int repe_classify_name) {
+    public void setRepe_classify_name(String repe_classify_name) {
         this.repe_classify_name = repe_classify_name;
     }
 
-    public int getRent_state() {
+    public String getRepe_id() {
+        return repe_id;
+    }
+
+    public void setRepe_id(String repe_id) {
+        this.repe_id = repe_id;
+    }
+
+    public String getRent_state() {
         return rent_state;
     }
 
-    public void setRent_state(int rent_state) {
+    public void setRent_state(String rent_state) {
         this.rent_state = rent_state;
     }
 
@@ -168,5 +207,13 @@ public class Repertory extends DataSupport {
 
     public void setMainboard(String mainboard) {
         this.mainboard = mainboard;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

@@ -9,33 +9,32 @@ import java.util.Date;
  * 合同表
  */
 public class Pact extends DataSupport {
-
-    private long id;
-    private int pact_state; //0:未中止 1:已终止
+    private String repe_id; //库存编号
+    private String pact_state; //0:未中止 1:已终止
     private String customer_name;
-    private int customer_classify;
+    private String customer_classify;
     private String customer_id_card;
     private String rent_address; //签约地址
-    private Date begin_time;
-    private Date end_time;
+    private String begin_time;
+    private String end_time;
     private float rent; //租金
     private float deposit; //押金
     private String customer_tel;
     private String customer_address;
 
-    public long getId() {
-        return id;
+    public String getRepe_id() {
+        return repe_id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setRepe_id(String repe_id) {
+        this.repe_id = repe_id;
     }
 
-    public int getPact_state() {
+    public String getPact_state() {
         return pact_state;
     }
 
-    public void setPact_state(int pact_state) {
+    public void setPact_state(String pact_state) {
         this.pact_state = pact_state;
     }
 
@@ -47,11 +46,11 @@ public class Pact extends DataSupport {
         this.customer_name = customer_name;
     }
 
-    public int getCustomer_classify() {
+    public String getCustomer_classify() {
         return customer_classify;
     }
 
-    public void setCustomer_classify(int customer_classify) {
+    public void setCustomer_classify(String customer_classify) {
         this.customer_classify = customer_classify;
     }
 
@@ -71,19 +70,19 @@ public class Pact extends DataSupport {
         this.rent_address = rent_address;
     }
 
-    public Date getBegin_time() {
+    public String getBegin_time() {
         return begin_time;
     }
 
-    public void setBegin_time(Date begin_time) {
+    public void setBegin_time(String begin_time) {
         this.begin_time = begin_time;
     }
 
-    public Date getEnd_time() {
+    public String getEnd_time() {
         return end_time;
     }
 
-    public void setEnd_time(Date end_time) {
+    public void setEnd_time(String end_time) {
         this.end_time = end_time;
     }
 

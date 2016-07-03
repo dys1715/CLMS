@@ -18,17 +18,23 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import dys.clms.bean.db.Pact;
+import dys.clms.bean.db.Repertory;
+
 /**
  * Created by Administrator on 2016/6/22 0022.
+ * 合同查询
  */
 public class PactSearchActivity extends BaseActivity {
 
     private RecyclerView remindList;
     private TextView count;
-    private List<String> mList;
+    private List<Pact> mPactList;
     private MyAdapter adapter;
 
     @Override
@@ -45,11 +51,8 @@ public class PactSearchActivity extends BaseActivity {
 
     private void initView() {
         //初始化假数据
-        mList = new ArrayList<>();
-        for (int i = 0; i < 18; i++) {
-            mList.add(i + "");
-        }
-        adapter = new MyAdapter(mList);
+        mPactList = DataSupport.findAll(Pact.class);
+        adapter = new MyAdapter(mPactList);
         remindList = (RecyclerView) findViewById(R.id.rv_remind_list);
         remindList.setLayoutManager(new LinearLayoutManager(this));
         remindList.setAdapter(adapter);
@@ -65,6 +68,7 @@ public class PactSearchActivity extends BaseActivity {
         MenuItem menuItemSearch = menu.findItem(R.id.ab_search);//在菜单中找到对应控件的item
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItemSearch);
         assert searchView != null;
+        searchView.setQueryHint("请输入姓名搜索");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -85,12 +89,12 @@ public class PactSearchActivity extends BaseActivity {
     }
 
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-        private List<String> list;
-        private List<String> searchList;
-        private List<String> oldList;
+        private List<Pact> list;
+        private List<Pact> searchList;
+        private List<Pact> oldList;
 
-        public MyAdapter(List<String> mList) {
-            list = mList;
+        public MyAdapter(List<Pact> mPactList) {
+            list = mPactList;
             oldList = list;
         }
 
@@ -103,16 +107,17 @@ public class PactSearchActivity extends BaseActivity {
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, final int position) {
-            holder.id.setText("合同编号：" + list.get(position));
-            holder.state.setText("合同状态：" + list.get(position));
-            holder.name.setText("姓名：" + list.get(position));
-            holder.tel.setText("电话：" + list.get(position));
-            holder.rentTime.setText("出租时间：" + list.get(position) + "");
-            holder.overTime.setText("截止时间：" + list.get(position) + "");
+            holder.id.setText("库存编号：" + list.get(position).getRepe_id());
+            holder.state.setText("合同状态：" + list.get(position).getPact_state());
+            holder.name.setText("姓名：" + list.get(position).getCustomer_name());
+            holder.tel.setText("电话：" + list.get(position).getCustomer_tel());
+            holder.rentTime.setText("出租时间：" + list.get(position).getBegin_time());
+            holder.overTime.setText("截止时间：" + list.get(position).getEnd_time());
             holder.root.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(mContext, PactDetailsActivity.class));
+                    startActivity(new Intent(mContext, PactDetailsActivity.class)
+                    .putExtra("repe_id",list.get(position).getRepe_id()));
                 }
             });
             holder.root.setOnLongClickListener(new View.OnLongClickListener() {
@@ -123,7 +128,13 @@ public class PactSearchActivity extends BaseActivity {
                             .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    mList.remove(position);
+                                    DataSupport.deleteAll(Pact.class,"repe_id=? and customer_name=?",
+                                            list.get(position).getRepe_id(),
+                                            list.get(position).getCustomer_name());
+                                    Repertory repertory = new Repertory();
+                                    repertory.setRent_state("未出租");
+                                    repertory.updateAll("repe_id=?",list.get(position).getRepe_id());
+                                    mPactList.remove(position);
                                     adapter.notifyDataSetChanged();
                                 }
                             })
@@ -153,7 +164,7 @@ public class PactSearchActivity extends BaseActivity {
         public void setFilter(String queryText) {
             searchList = new ArrayList<>();
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).toLowerCase().contains(queryText)) {
+                if (list.get(i).getCustomer_name().toLowerCase().contains(queryText)) {
                     searchList.add(list.get(i));
                 }
             }

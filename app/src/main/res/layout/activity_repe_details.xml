@@ -51,6 +51,7 @@
                     android:id="@+id/et_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="number"
                     android:textSize="16dp"/>
             </LinearLayout>
 
@@ -404,6 +405,7 @@
                     android:id="@+id/et_rent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
                     android:textSize="16dp"/>
             </LinearLayout>
 
@@ -423,6 +425,7 @@
                     android:id="@+id/et_deposit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
                     android:textSize="16dp"/>
             </LinearLayout>
         </LinearLayout>

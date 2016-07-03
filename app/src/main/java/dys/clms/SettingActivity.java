@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -136,9 +137,11 @@ public class SettingActivity extends BaseActivity {
             @Override
             public void run() {
                 mCompanyList.clear();
-                CompanyInfo info = new CompanyInfo();
-                info.setName("");
-                info.save();
+//                CompanyInfo info = new CompanyInfo();
+//                info.setName(" ");
+//                info.setAddress(" ");
+//                info.setTel(" ");
+//                info.save();
                 Cursor cursor = null;
                 try {
                     cursor = Connector.getDatabase()
@@ -150,6 +153,8 @@ public class SettingActivity extends BaseActivity {
                             String address = cursor.getString(cursor.getColumnIndex("address"));
                             mCompanyList.add(new Company(name, tel, address));
                         } while (cursor.moveToNext());
+                    }else {
+                        mCompanyList.add(new Company("", "", ""));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -160,10 +165,11 @@ public class SettingActivity extends BaseActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-//                            adapter.notifyDataSetChanged();
-                            etCompany.setText(mCompanyList.get(0).getName());
-                            etAddress.setText(mCompanyList.get(0).getAddress());
-                            etTel.setText(mCompanyList.get(0).getTel());
+                            if (mCompanyList.size()>0){
+                                etCompany.setText(mCompanyList.get(0).getName());
+                                etAddress.setText(mCompanyList.get(0).getAddress());
+                                etTel.setText(mCompanyList.get(0).getTel());
+                            }
                         }
                     });
                 }

@@ -2,6 +2,7 @@ package dys.clms;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
@@ -18,10 +19,15 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.litepal.crud.DataSupport;
+import org.litepal.tablemanager.Connector;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import dys.clms.bean.db.Repertory;
 import dys.clms.common.ConstantValue;
 
 /**
@@ -31,42 +37,53 @@ import dys.clms.common.ConstantValue;
 public class RepertoryActivity extends BaseActivity {
 
     //    private TextView title, back;
-    private ListView repertoryList;
-    private List<String> mList;
+    private ListView lvRepe;
     private MyAdapter adapter;
+    private List<Repertory> repertoryList = new ArrayList<>();
+    private int isFromRentSearch;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repertory);
-        //初始化假数据
-        mList = new ArrayList<>();
-        for (int i = 0; i < 18; i++) {
-            mList.add(i + "");
-        }
-        repertoryList = (ListView) findViewById(R.id.lv_repertory_list);
-        adapter = new MyAdapter(mList);
-        repertoryList.setAdapter(adapter);
-        repertoryList.setTextFilterEnabled(true);
-        repertoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        lvRepe = (ListView) findViewById(R.id.lv_repertory_list);
+        adapter = new MyAdapter(repertoryList);
+        lvRepe.setAdapter(adapter);
+//        getDataFromDB("repertory");
+        isFromRentSearch = getIntent().getIntExtra("repe_search", -1);
+        lvRepe.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(mContext, RepertoryDetailsActivity.class)
-                        .putExtra("dataType", ConstantValue.VIEW_DATA));
+                if (isFromRentSearch == 1) {
+                    setResult(RESULT_OK, new Intent().putExtra("repe_id",
+                            repertoryList.get(position).getRepe_id()));
+                    finish();
+                } else {
+                    startActivity(new Intent(mContext, RepertoryDetailsActivity.class)
+                            .putExtra("dataType", ConstantValue.VIEW_DATA)
+                            .putExtra("repe_id", repertoryList.get(position).getRepe_id())
+                            .putExtra("repe_classify", repertoryList.get(position).getRepe_classify_name()));
+                }
             }
         });
-        repertoryList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        lvRepe.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 new AlertDialog.Builder(mContext).setItems(new String[]{"修改", "删除"},
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if (which == 0){
-                                    startActivity(new Intent(mContext,RepertoryDetailsActivity.class)
-                                            .putExtra("dataType",ConstantValue.CHANGE_DATA));
-                                }else {
-                                    mList.remove(position);
+                                if (which == 0) {
+                                    startActivity(new Intent(mContext, RepertoryDetailsActivity.class)
+                                            .putExtra("dataType", ConstantValue.CHANGE_DATA)
+                                            .putExtra("repe_id", repertoryList.get(position).getRepe_id())
+                                            .putExtra("repe_classify", repertoryList.get(position).getRepe_classify_name()));
+                                } else {
+                                    DataSupport.deleteAll(Repertory.class, "repe_id=? and repe_classify_name=?",
+                                            repertoryList.get(position).getRepe_id(),
+                                            repertoryList.get(position).getRepe_classify_name());
+                                    repertoryList.remove(position);
                                     adapter.notifyDataSetChanged();
                                 }
                             }
@@ -74,6 +91,17 @@ public class RepertoryActivity extends BaseActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getDataFromDB("repertory");
+            }
+        }).start();
     }
 
     @Override
@@ -103,11 +131,12 @@ public class RepertoryActivity extends BaseActivity {
         MenuItem menuItem = menu.findItem(R.id.action_search);//在菜单中找到对应控件的item
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         assert searchView != null;
+        searchView.setQueryHint("请输入分类搜索");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
 //                Toast.makeText(MainActivity.this, "submit", Toast.LENGTH_SHORT).show();
-                ((MyAdapter) repertoryList.getAdapter()).setFilter(query);
+                ((MyAdapter) lvRepe.getAdapter()).setFilter(query);
                 return true;
             }
 
@@ -115,20 +144,86 @@ public class RepertoryActivity extends BaseActivity {
             public boolean onQueryTextChange(String newText) {
 //                Toast.makeText(MainActivity.this, "change", Toast.LENGTH_SHORT).show();
                 if (newText.isEmpty())
-                    ((MyAdapter) repertoryList.getAdapter()).flushFilter();
+                    ((MyAdapter) lvRepe.getAdapter()).flushFilter();
                 return true;
             }
         });
         return true;
     }
 
+    private void getDataFromDB(final String tab) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                repertoryList.clear();
+                Cursor cursor = null;
+                try {
+                    if (isFromRentSearch == 1){
+                        cursor = Connector.getDatabase()
+                                .rawQuery("select * from " + tab + " where rent_state='未出租'" +" order by id", null);
+                    }else {
+                        cursor = Connector.getDatabase()
+                                .rawQuery("select * from " + tab + " order by id", null);
+                    }
+                    if (cursor.moveToFirst()) {
+                        do {
+                            String classify_name = cursor.getString(cursor.getColumnIndex("repe_classify_name"));
+                            String rent_state = cursor.getString(cursor.getColumnIndex("rent_state"));
+                            String repe_id = cursor.getString(cursor.getColumnIndex("repe_id"));
+                            float rent = cursor.getFloat(cursor.getColumnIndex("rent"));
+                            float deposit = cursor.getFloat(cursor.getColumnIndex("deposit"));
+                            String cpu = cursor.getString(cursor.getColumnIndex("cpu"));
+                            String memory = cursor.getString(cursor.getColumnIndex("memory"));
+                            String hardDisk = cursor.getString(cursor.getColumnIndex("harddisk"));
+                            String gpu = cursor.getString(cursor.getColumnIndex("gpu"));
+                            String screen = cursor.getString(cursor.getColumnIndex("screen"));
+                            String cdDriver = cursor.getString(cursor.getColumnIndex("cddriver"));
+                            String softDriver = cursor.getString(cursor.getColumnIndex("softdriver"));
+                            String soundCard = cursor.getString(cursor.getColumnIndex("soundcard"));
+                            String keyboard = cursor.getString(cursor.getColumnIndex("keyboard"));
+                            String mouse = cursor.getString(cursor.getColumnIndex("mouse"));
+                            String box = cursor.getString(cursor.getColumnIndex("box"));
+                            String soundBox = cursor.getString(cursor.getColumnIndex("soundbox"));
+                            String networkCard = cursor.getString(cursor.getColumnIndex("networkcard"));
+                            String mainboard = cursor.getString(cursor.getColumnIndex("mainboard"));
+                            String remark = cursor.getString(cursor.getColumnIndex("remark"));
+                            repertoryList.add(new Repertory(classify_name, repe_id, rent_state, rent,
+                                    deposit, cpu, memory, hardDisk, gpu, screen, cdDriver, softDriver,
+                                    soundCard, keyboard, mouse, box, soundBox, networkCard, mainboard, remark));
+                        } while (cursor.moveToNext());
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, "没有数据", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (cursor != null) {
+                        cursor.close();
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+        }).start();
+
+    }
+
     class MyAdapter extends BaseAdapter {
 
-        private List<String> mList;
-        private List<String> searchList;
-        private List<String> oldList;
+        private List<Repertory> mList;
+        private List<Repertory> searchList;
+        private List<Repertory> oldList;
 
-        public MyAdapter(List<String> mList) {
+        public MyAdapter(List<Repertory> mList) {
             this.mList = mList;
             oldList = mList;
         }
@@ -156,6 +251,7 @@ public class RepertoryActivity extends BaseActivity {
                 holder = new ViewHolder();
                 holder.classify = (TextView) convertView.findViewById(R.id.tv_classify);
                 holder.state = (TextView) convertView.findViewById(R.id.tv_classify_state);
+                holder.id = (TextView) convertView.findViewById(R.id.tv_repe_id);
                 holder.rent = (TextView) convertView.findViewById(R.id.tv_rent);
                 holder.deposit = (TextView) convertView.findViewById(R.id.tv_deposit);
                 holder.cpu = (TextView) convertView.findViewById(R.id.tv_cpu);
@@ -165,7 +261,14 @@ public class RepertoryActivity extends BaseActivity {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.classify.setText("分类" + mList.get(position));
+            holder.classify.setText("分类：" + mList.get(position).getRepe_classify_name());
+            holder.state.setText("库存状态：" + mList.get(position).getRent_state());
+            holder.id.setText("库存编号：" + mList.get(position).getRepe_id());
+            holder.rent.setText("月租金：" + mList.get(position).getRent());
+            holder.deposit.setText("押金：" + mList.get(position).getDeposit());
+            holder.cpu.setText("CPU：" + mList.get(position).getCpu());
+            holder.mainboard.setText("主板：" + mList.get(position).getMainboard());
+            holder.gpu.setText("GPU：" + mList.get(position).getGpu());
             return convertView;
         }
 
@@ -179,7 +282,7 @@ public class RepertoryActivity extends BaseActivity {
         public void setFilter(String queryText) {
             searchList = new ArrayList<>();
             for (int i = 0; i < mList.size(); i++) {
-                if (mList.get(i).toLowerCase().contains(queryText)) {
+                if (mList.get(i).getRepe_classify_name().toLowerCase().contains(queryText)) {
                     searchList.add(mList.get(i));
                 }
             }
@@ -189,7 +292,7 @@ public class RepertoryActivity extends BaseActivity {
         }
 
         class ViewHolder {
-            TextView classify,state,rent,deposit,cpu,gpu,mainboard;
+            TextView classify, state, rent, deposit, cpu, gpu, mainboard, id;
         }
     }
 }

@@ -81,6 +81,7 @@
                     android:id="@+id/et_tel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:inputType="number"
                     android:layout_weight="1"/>
             </LinearLayout>
         </LinearLayout>
@@ -205,7 +206,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="点击选择时间"
+                    android:hint="点击选择时间"
                     android:layout_weight="1"/>
             </LinearLayout>
 
@@ -225,7 +226,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="点击选择时间"
+                    android:hint="点击选择时间"
                     android:layout_weight="1"/>
             </LinearLayout>
         </LinearLayout>

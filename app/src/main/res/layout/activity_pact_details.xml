@@ -18,7 +18,36 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:text="合同状态：已终止" />
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/colorDivider"/>
+    <TextView
+        android:id="@+id/tv_company_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="甲方姓名：111111" />
+    <TextView
+        android:id="@+id/tv_company_tel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="甲方电话：111111" />
+    <TextView
+        android:id="@+id/tv_company_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="甲方地址：111111" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/colorDivider"/>
     <TextView
         android:id="@+id/tv_pact_customer"
         android:layout_width="wrap_content"
@@ -39,7 +68,12 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:text="乙方地址：东方" />
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/colorDivider"/>
     <TextView
         android:id="@+id/tv_pact_customer_classify"
         android:layout_width="wrap_content"

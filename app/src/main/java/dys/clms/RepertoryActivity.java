@@ -41,12 +41,14 @@ public class RepertoryActivity extends BaseActivity {
     private MyAdapter adapter;
     private List<Repertory> repertoryList = new ArrayList<>();
     private int isFromRentSearch;
+    private TextView tvCount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repertory);
 
+        tvCount = (TextView) findViewById(R.id.tv_count);
         lvRepe = (ListView) findViewById(R.id.lv_repertory_list);
         adapter = new MyAdapter(repertoryList);
         lvRepe.setAdapter(adapter);
@@ -56,8 +58,10 @@ public class RepertoryActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (isFromRentSearch == 1) {
-                    setResult(RESULT_OK, new Intent().putExtra("repe_id",
-                            repertoryList.get(position).getRepe_id()));
+                    setResult(RESULT_OK, new Intent()
+                            .putExtra("repe_id", repertoryList.get(position).getRepe_id())
+                            .putExtra("rent", String.valueOf(repertoryList.get(position).getRent()))
+                            .putExtra("deposit", String.valueOf(repertoryList.get(position).getDeposit())));
                     finish();
                 } else {
                     startActivity(new Intent(mContext, RepertoryDetailsActivity.class)
@@ -74,17 +78,21 @@ public class RepertoryActivity extends BaseActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if (which == 0) {
-                                    startActivity(new Intent(mContext, RepertoryDetailsActivity.class)
-                                            .putExtra("dataType", ConstantValue.CHANGE_DATA)
-                                            .putExtra("repe_id", repertoryList.get(position).getRepe_id())
-                                            .putExtra("repe_classify", repertoryList.get(position).getRepe_classify_name()));
+                                if (repertoryList.get(position).getRent_state().equals("已出租")) {
+                                    Toast.makeText(mContext, "当前库存订单已出租，不可修改", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    DataSupport.deleteAll(Repertory.class, "repe_id=? and repe_classify_name=?",
-                                            repertoryList.get(position).getRepe_id(),
-                                            repertoryList.get(position).getRepe_classify_name());
-                                    repertoryList.remove(position);
-                                    adapter.notifyDataSetChanged();
+                                    if (which == 0) {
+                                        startActivity(new Intent(mContext, RepertoryDetailsActivity.class)
+                                                .putExtra("dataType", ConstantValue.CHANGE_DATA)
+                                                .putExtra("repe_id", repertoryList.get(position).getRepe_id())
+                                                .putExtra("repe_classify", repertoryList.get(position).getRepe_classify_name()));
+                                    } else {
+                                        DataSupport.deleteAll(Repertory.class, "repe_id=? and repe_classify_name=?",
+                                                repertoryList.get(position).getRepe_id(),
+                                                repertoryList.get(position).getRepe_classify_name());
+                                        repertoryList.remove(position);
+                                        adapter.notifyDataSetChanged();
+                                    }
                                 }
                             }
                         }).show();
@@ -158,10 +166,10 @@ public class RepertoryActivity extends BaseActivity {
                 repertoryList.clear();
                 Cursor cursor = null;
                 try {
-                    if (isFromRentSearch == 1){
+                    if (isFromRentSearch == 1) {
                         cursor = Connector.getDatabase()
-                                .rawQuery("select * from " + tab + " where rent_state='未出租'" +" order by id", null);
-                    }else {
+                                .rawQuery("select * from " + tab + " where rent_state='未出租'" + " order by id", null);
+                    } else {
                         cursor = Connector.getDatabase()
                                 .rawQuery("select * from " + tab + " order by id", null);
                     }
@@ -209,6 +217,7 @@ public class RepertoryActivity extends BaseActivity {
                         @Override
                         public void run() {
                             adapter.notifyDataSetChanged();
+                            tvCount.setText("库存总数：" + repertoryList.size() + "\t(长按可编辑)");
                         }
                     });
                 }

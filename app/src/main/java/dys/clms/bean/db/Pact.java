@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class Pact extends DataSupport {
     private String repe_id; //库存编号
-    private String pact_state; //0:未中止 1:已终止
+    private String pact_state; //有效，已终止
     private String customer_name;
     private String customer_classify;
     private String customer_id_card;

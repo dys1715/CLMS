@@ -63,12 +63,34 @@ public class RentActivity extends BaseActivity {
     @BindView(R.id.tv_over_time)
     TextView tvOverTime;
 
+    private int isPactRelet; //是否是续约
+    private List<Pact> mPactList;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rent);
         ButterKnife.bind(this);
+        isPactRelet = getIntent().getIntExtra("pact_relet", -1);
+
         List<CustomerClassify> customers = DataSupport.findAll(CustomerClassify.class);
+        if (isPactRelet == 1) {
+            String repe_id = getIntent().getStringExtra("repe_id");
+            String name = getIntent().getStringExtra("customer_name");
+            mPactList = DataSupport.where("repe_id=? and customer_name=?", repe_id, name).find(Pact.class);
+            customerClassify.add(mPactList.get(0).getCustomer_classify());
+            etRepertoryId.setText(mPactList.get(0).getRepe_id());
+            btnSearchRepertory.setEnabled(false);
+            etUserName.setText(mPactList.get(0).getCustomer_name());
+            etTel.setText(mPactList.get(0).getCustomer_tel());
+            etIdCard.setText(mPactList.get(0).getCustomer_id_card());
+            etUserAddress.setText(mPactList.get(0).getCustomer_address());
+            etRent.setText(String.valueOf(mPactList.get(0).getRent()));
+            etDeposit.setText(String.valueOf(mPactList.get(0).getDeposit()));
+            etSignedAt.setText(mPactList.get(0).getRent_address());
+            tvRentTime.setText(mPactList.get(0).getBegin_time());
+            tvOverTime.setText(mPactList.get(0).getEnd_time());
+        }
         for (int i = 0; i < customers.size(); i++) {
             customerClassify.add(customers.get(i).getName());
         }
@@ -90,14 +112,20 @@ public class RentActivity extends BaseActivity {
                         .putExtra("repe_search", 1), REQUEST_CODE);
                 break;
             case R.id.btn_build_pact:
+                boolean isSave = false;
+                List<Pact> tmpPacts = DataSupport.where("repe_id=? and customer_name=?",
+                        etRepertoryId.getText().toString(),
+                        etUserName.getText().toString()).find(Pact.class);
                 if (TextUtils.isEmpty(etUserName.getText().toString())
                         || TextUtils.isEmpty(etTel.getText().toString())
                         || TextUtils.isEmpty(etRepertoryId.getText().toString())
                         || TextUtils.isEmpty(etRent.getText().toString())
                         || TextUtils.isEmpty(tvRentTime.getText().toString())
                         || TextUtils.isEmpty(tvOverTime.getText().toString())) {
-                    Toast.makeText(mContext,"信息未完善",Toast.LENGTH_SHORT).show();
-                }else {
+                    Toast.makeText(mContext, "信息未完善", Toast.LENGTH_SHORT).show();
+                } else if (tmpPacts.size() != 0 && isPactRelet != 1) {
+                    Toast.makeText(mContext, "该用户此订单合同已存在,请到合同查询中查找该用户进行续租或者终止合同操作", Toast.LENGTH_LONG).show();
+                } else {
                     Pact pact = new Pact();
                     pact.setRepe_id(etRepertoryId.getText().toString());
                     pact.setPact_state("有效");
@@ -111,14 +139,21 @@ public class RentActivity extends BaseActivity {
                     pact.setBegin_time(tvRentTime.getText().toString());
                     pact.setEnd_time(tvOverTime.getText().toString());
                     pact.setCustomer_classify(customerClassify.get(spCustomerClassify.getSelectedItemPosition()));
-                    boolean isSave = pact.save();
-                    Repertory repertory = new Repertory();
-                    repertory.setRent_state("已出租");
-                    repertory.updateAll("repe_id=?",etRepertoryId.getText().toString());
-                    if (isSave){
+                    if (isPactRelet == 1) {
+                        pact.updateAll("repe_id=? and customer_name=?",
+                                etRepertoryId.getText().toString(), etUserName.getText().toString());
+                    } else {
+                        isSave = pact.save();
+                        Repertory repertory = new Repertory();
+                        repertory.setRent_state("已出租");
+                        repertory.setRent(Float.parseFloat(etRent.getText().toString()));
+                        repertory.setDeposit(Float.parseFloat(etDeposit.getText().toString()));
+                        repertory.updateAll("repe_id=?", etRepertoryId.getText().toString());
+                    }
+                    if (isSave || isPactRelet == 1) {
                         finish();
-                    }else {
-                        Toast.makeText(mContext,"合同生成失败",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(mContext, "合同生成失败", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -136,7 +171,7 @@ public class RentActivity extends BaseActivity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        textView.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+                        textView.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                     }
                 },
                 Calendar.getInstance().get(Calendar.YEAR),
@@ -149,7 +184,11 @@ public class RentActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             String repe_id = data.getStringExtra("repe_id");
+            String rent = data.getStringExtra("rent");
+            String deposit = data.getStringExtra("deposit");
             etRepertoryId.setText(repe_id);
+            etRent.setText(rent);
+            etDeposit.setText(deposit);
         }
     }
 

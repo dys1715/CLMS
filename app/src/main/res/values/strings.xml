@@ -1,8 +1,14 @@
 <resources>
-    <string name="app_name">CLMS</string>
+    <string name="app_name">电脑租赁管理系统</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="guide">\n在使用本系统之前，请先设置常用配置、甲方信息、库存分类及客户分类\n
+                1.常用配置维护：\n\t进入后点击编辑按钮添加数据,如“I7”\n
+                2.库存分类设置：\n\t进入后添加数据，如“台式机”\n
+                3.客户分类设置：\n\t进入后添加数据，如“客户分类：VIP，折扣率：90”\n
+                以上数据填写完成后若无确认按钮，返回即自动保存
+    </string>
 </resources>

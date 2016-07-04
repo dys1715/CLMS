@@ -17,12 +17,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import dys.clms.bean.db.CompanyInfo;
 import dys.clms.bean.db.Pact;
 import dys.clms.bean.db.Repertory;
 
@@ -34,7 +36,7 @@ public class PactSearchActivity extends BaseActivity {
 
     private RecyclerView remindList;
     private TextView count;
-    private List<Pact> mPactList;
+    private List<Pact> mPactList = new ArrayList<>();
     private MyAdapter adapter;
 
     @Override
@@ -45,20 +47,26 @@ public class PactSearchActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mPactList.clear();
+        mPactList.addAll(DataSupport.findAll(Pact.class));
+        adapter.notifyDataSetChanged();
+        count.setText("合同总数：" + remindList.getAdapter().getItemCount()+"\t(长按可编辑)");
+    }
+
+    @Override
     protected void initTitle() {
         setTitle("合同查询");
     }
 
     private void initView() {
-        //初始化假数据
-        mPactList = DataSupport.findAll(Pact.class);
         adapter = new MyAdapter(mPactList);
         remindList = (RecyclerView) findViewById(R.id.rv_remind_list);
         remindList.setLayoutManager(new LinearLayoutManager(this));
         remindList.setAdapter(adapter);
 
         count = (TextView) findViewById(R.id.tv_count);
-        count.setText("合同总数：" + remindList.getAdapter().getItemCount());
     }
 
     @Override
@@ -117,7 +125,9 @@ public class PactSearchActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(mContext, PactDetailsActivity.class)
-                    .putExtra("repe_id",list.get(position).getRepe_id()));
+                    .putExtra("repe_id",list.get(position).getRepe_id())
+                    .putExtra("customer_name",list.get(position).getCustomer_name())
+                    .putExtra("pact_state",list.get(position).getPact_state()));
                 }
             });
             holder.root.setOnLongClickListener(new View.OnLongClickListener() {
@@ -128,14 +138,18 @@ public class PactSearchActivity extends BaseActivity {
                             .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    DataSupport.deleteAll(Pact.class,"repe_id=? and customer_name=?",
-                                            list.get(position).getRepe_id(),
-                                            list.get(position).getCustomer_name());
-                                    Repertory repertory = new Repertory();
-                                    repertory.setRent_state("未出租");
-                                    repertory.updateAll("repe_id=?",list.get(position).getRepe_id());
-                                    mPactList.remove(position);
-                                    adapter.notifyDataSetChanged();
+                                    if (list.get(position).getPact_state().equals("已终止")){
+                                        DataSupport.deleteAll(Pact.class,"repe_id=? and customer_name=?",
+                                                list.get(position).getRepe_id(),
+                                                list.get(position).getCustomer_name());
+                                        Repertory repertory = new Repertory();
+                                        repertory.setRent_state("未出租");
+                                        repertory.updateAll("repe_id=?",list.get(position).getRepe_id());
+                                        mPactList.remove(position);
+                                        adapter.notifyDataSetChanged();
+                                    }else {
+                                        Toast.makeText(mContext,"当前合同未中止，不可删除",Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             })
                             .setNegativeButton("取消", new DialogInterface.OnClickListener() {

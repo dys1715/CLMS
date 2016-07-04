@@ -1,6 +1,9 @@
 package dys.clms;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -13,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,9 +25,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.litepal.crud.DataSupport;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import dys.clms.bean.db.Pact;
+import dys.clms.common.CommonMethod;
 
 /**
  * 到期订单
@@ -36,12 +50,47 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private RecyclerView remindList;
     private TextView count;
+    private MyAdapter mAdapter;
+    private List<Pact> mPactList = new ArrayList<>();
+    private int useCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        useCount = CommonMethod.setSharedPreference(MainActivity.this);
+        Log.i("count>>>>>>>>>>>", useCount + "");
+        if (useCount > 200) {
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("到期提示")
+                    .setMessage("200次试用体验已结束，如继续使用，请联系作者[QQ：289133385]")
+                    .setCancelable(false)
+                    .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    }).show();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPactList.clear();
+        List<Pact> temp = DataSupport.findAll(Pact.class);
+//        mPactList.addAll(DataSupport.findAll(Pact.class));
+        for (int i = 0; i < temp.size(); i++) {
+            if (dateDiff(temp.get(i).getEnd_time()) > 0) {
+                if (!temp.get(i).getPact_state().equals("已终止")) {
+                    mPactList.add(temp.get(i));
+                }
+            }
+        }
+        mAdapter.notifyDataSetChanged();
+        count.setText("到期合同总数：" + remindList.getAdapter().getItemCount()
+                + "\t**当前剩余可使用次数" + (200 - useCount) + "**");
     }
 
     private void initView() {
@@ -70,22 +119,38 @@ public class MainActivity extends AppCompatActivity
 
         remindList = (RecyclerView) findViewById(R.id.rv_remind_list);
         remindList.setLayoutManager(new LinearLayoutManager(this));
-        remindList.setAdapter(new MyAdapter());
+        mAdapter = new MyAdapter(mPactList);
+        remindList.setAdapter(mAdapter);
 
         count = (TextView) findViewById(R.id.tv_count);
-        count.setText("到期合同总数：" + remindList.getAdapter().getItemCount());
+    }
+
+    private long dateDiff(String endTime) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        long diff = 0;
+        try {
+            Date curDate = new Date(System.currentTimeMillis());//获取当前时间： Date curDate = new Date(System.currentTimeMillis());
+            Date d2 = df.parse(endTime);
+            diff = curDate.getTime() - d2.getTime();//这样得到的差值是微秒级别
+
+            long days = diff / (1000 * 60 * 60 * 24);
+            long hours = (diff - days * (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+            long minutes = (diff - days * (1000 * 60 * 60 * 24) - hours * (1000 * 60 * 60)) / (1000 * 60);
+
+            Log.i("MainActivity timeDiff", "" + days + "天" + hours + "小时" + minutes + "分");
+
+        } catch (Exception e) {
+        }
+        return diff;
     }
 
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-        private List<String> list;
-        private List<String> searchList;
-        private List<String> oldList;
+        private List<Pact> list;
+        private List<Pact> searchList;
+        private List<Pact> oldList;
 
-        public MyAdapter() {
-            list = new ArrayList<>();
-            for (int i = 0; i < 18; i++) {
-                list.add(i + "");
-            }
+        public MyAdapter(List<Pact> mPactList) {
+            list = mPactList;
             oldList = list;
         }
 
@@ -97,16 +162,18 @@ public class MainActivity extends AppCompatActivity
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
-            holder.id.setText("合同编号：" + list.get(position));
-            holder.name.setText("姓名：" + list.get(position));
-            holder.tel.setText("电话：" + list.get(position));
-            holder.rentTime.setText("出租时间：" + list.get(position) + "");
-            holder.overTime.setText("截止时间：" + list.get(position) + "");
+        public void onBindViewHolder(MyViewHolder holder, final int position) {
+            holder.id.setText("库存编号：" + list.get(position).getRepe_id());
+            holder.name.setText("姓名：" + list.get(position).getCustomer_name());
+            holder.tel.setText("电话：" + list.get(position).getCustomer_tel());
+            holder.rentTime.setText("出租时间：" + list.get(position).getBegin_time());
+            holder.overTime.setText("截止时间：" + list.get(position).getEnd_time());
             holder.root.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this,PactDetailsActivity.class));
+                    startActivity(new Intent(MainActivity.this, PactDetailsActivity.class)
+                            .putExtra("repe_id", list.get(position).getRepe_id())
+                            .putExtra("customer_name", list.get(position).getCustomer_name()));
                 }
             });
         }
@@ -126,7 +193,7 @@ public class MainActivity extends AppCompatActivity
         public void setFilter(String queryText) {
             searchList = new ArrayList<>();
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).toLowerCase().contains(queryText)) {
+                if (list.get(i).getCustomer_name().toLowerCase().contains(queryText)) {
                     searchList.add(list.get(i));
                 }
             }
@@ -137,12 +204,12 @@ public class MainActivity extends AppCompatActivity
 
         class MyViewHolder extends RecyclerView.ViewHolder {
             LinearLayout root;
-            TextView id,name, tel, rentTime, overTime;
+            TextView id, name, tel, rentTime, overTime;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
-                root = (LinearLayout)itemView.findViewById(R.id.ll_root);
-                id = (TextView)itemView.findViewById(R.id.tv_id);
+                root = (LinearLayout) itemView.findViewById(R.id.ll_root);
+                id = (TextView) itemView.findViewById(R.id.tv_id);
                 name = (TextView) itemView.findViewById(R.id.tv_name);
                 tel = (TextView) itemView.findViewById(R.id.tv_tel);
                 rentTime = (TextView) itemView.findViewById(R.id.tv_rent_time);
@@ -170,6 +237,7 @@ public class MainActivity extends AppCompatActivity
         menuItemSearch = menu.findItem(R.id.ab_search);//在菜单中找到对应控件的item
         searchView = (SearchView) MenuItemCompat.getActionView(menuItemSearch);
         assert searchView != null;
+        searchView.setQueryHint("请输入姓名查询");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -223,6 +291,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             //关于
             case R.id.nav_about:
+                startActivity(new Intent(this, SettingActivity.class));
                 break;
             default:
                 break;

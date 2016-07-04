@@ -1,43 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_configuration"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:text="常用配置维护"/>
-    <Button
-        android:id="@+id/btn_renter_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:text="甲方信息设置"/>
-    <Button
-        android:visibility="gone"
-        android:id="@+id/btn_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:text="签订地点设置"/>
-    <Button
-        android:id="@+id/btn_repe"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:text="库存分类设置"/>
-    <Button
-        android:id="@+id/btn_customer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:text="客户分类设置"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/guide"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btn_configuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="常用配置维护"
+            android:textSize="16dp"/>
+
+        <Button
+            android:id="@+id/btn_renter_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="甲方信息设置"
+            android:textSize="16dp"/>
+
+        <Button
+            android:id="@+id/btn_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="签订地点设置"
+            android:textSize="16dp"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btn_repe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="库存分类设置"
+            android:textSize="16dp"/>
+
+        <Button
+            android:id="@+id/btn_customer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="客户分类设置"
+            android:textSize="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/guide"/>
+    </LinearLayout>
+</ScrollView>
